@@ -15,8 +15,8 @@ Generate a complete, production-ready prompt package for a 1-shot 8-second silen
 
 ```
 VIDEO (8 seconds — 1 shot)
-├── Start Frame  (full-body mirror selfie — image prompt)
-│   Pose: standing in front of mirror, confident happy smile
+├── Start Frame  (full-body standing shot — image prompt)
+│   Pose: standing confidently, happy smile, both hands free
 │
 └── Movement Arc (8s — walk + turn + pose)
     0-3s: Walk toward camera with confident stride
@@ -24,7 +24,7 @@ VIDEO (8 seconds — 1 shot)
     5-8s: Return to face camera, settle into confident pose
 ```
 
-- **1 image prompt** for the start frame (full-body, 9:16)
+- **1 image prompt** for the start frame (full-body standing shot, 9:16)
 - **1 video prompt** describing the 8s walk + turn + pose arc (Kling 3.0)
 - **3 text overlay options** (short personal discovery, EN UK, TikTok compliant)
 - **Product info**: title (30 chars, includes size) + description (40 chars) + 3 hashtags
@@ -53,7 +53,7 @@ If `@influencer` or `@product` are missing, ask the user to provide them before 
 Stage 1: Product & Audience Analysis
         → Detect clothing type, features, target audience, movement map
 Stage 2: Start Frame — Image Prompt
-        → Full-body mirror selfie, ultra-realistic, 9:16
+        → Full-body standing shot, ultra-realistic, 9:16
 Stage 3: Video Prompt (8s, Kling 3.0)
         → Walk + turn + pose with clothing-specific physics
 Stage 4: Text Overlay (3 options)
@@ -112,9 +112,9 @@ Based on the detected clothing type, select the optimal movement pattern:
 
 ## Stage 2 — Start Frame Image Prompt
 
-Generate **1 ultra-realistic full-body image prompt** — compact single-paragraph format.
+Generate **1 ultra-realistic full-body image prompt** — compact single-paragraph format. **NO phone, NO mirror selfie** — the model is NOT holding any device.
 
-> **CRITICAL**: Follow the full-body clothing format from `ultra-realitic-images-prompt.md` (project root). Face ~25-35% of frame, full outfit visible head to toe.
+> **CRITICAL**: Follow the full-body clothing format from `ultra-realitic-images-prompt.md` (project root). Face ~25-35% of frame, full outfit visible head to toe. Both hands free — natural pose, no phone.
 
 ### Mandatory First Line
 
@@ -136,12 +136,12 @@ Write as **one flowing paragraph** — all essential layers woven into a single 
 
 @influencer @product
 
-"Ultra-realistic full-body mirror selfie, phone held at [chest/face] height 
-[angled slightly downward], full body visible head to toe in a [large 
-bedroom/hallway] mirror, model fills ~85% of vertical 9:16 frame height, 
-face ~[25-30]%; [expression — confident happy smile, bright eyes, genuine 
-enthusiasm, looking at phone screen in mirror. MANDATORY: happiness and 
-confidence — never neutral or flat].
+"Ultra-realistic full-body standing shot, straight-on camera at waist 
+height, full body visible head to toe in a [bright bedroom/hallway], 
+model fills ~85% of vertical 9:16 frame height, face ~[25-30]%; 
+[expression — confident happy smile, bright eyes, genuine enthusiasm, 
+looking directly at camera. MANDATORY: happiness and confidence — never 
+neutral or flat]. Both hands free — no phone, no device.
 
 Wearing [full clothing description from @product: garment type, fit, 
 colour/wash, material, key construction details (stitching, buttons, 
@@ -154,8 +154,8 @@ Standing with [pose adapted to clothing type: weight distribution, hand
 position, body angle — shows garment silhouette at its best].
 
 Sharp focus on model and clothing simultaneously, fabric texture visible. 
-[Room type] with full-length [mirror type], [object 1], [object 2], 
-[object 3] — softly blurred bokeh, lived-in personal space.
+[Room type] with [object 1], [object 2], [object 3] — softly blurred 
+bokeh, lived-in personal space.
 
 [Lighting — bright natural window light, source + direction + 5500K 
 daylight for true-colour fabric rendering].
@@ -164,12 +164,13 @@ Visible skin pores, stray hairs at hairline, natural texture — no filter.
 [Fabric realism — visible weave/texture, natural creasing, stitching 
 detail, how light catches material, realistic drape].
 
-Mood: [confident, bright, authentic mirror selfie / excited new outfit 
+Mood: [confident, bright, authentic UGC energy / excited new outfit 
 energy].
 
 Negative: CGI, cartoon, airbrushed skin, plastic texture, plastic fabric, 
 stiff fabric, text, watermark, extra fingers, mannequin pose, catalogue 
-shot, studio backdrop, fashion editorial, overly posed, DSLR."
+shot, studio backdrop, fashion editorial, overly posed, DSLR, holding 
+phone, mirror selfie, phone in hand, mirror reflection."
 ```
 
 ### Character Consistency Rules
@@ -217,9 +218,9 @@ Every Kling 3.0 video prompt follows this structure:
 
 | Seconds | Beat | Movement Description | Clothing Physics |
 |---------|------|---------------------|-----------------|
-| **0-3s** | **Walk** | Model walks toward camera/mirror with confident natural stride. Heel-first landing, visible weight transfer, arms swing naturally at sides. | Fabric moves with body: denim stretches at thighs, dress hem sways, jacket swings from button point |
+| **0-3s** | **Walk** | Model walks toward camera with confident natural stride. Heel-first landing, visible weight transfer, arms swing naturally at sides. | Fabric moves with body: denim stretches at thighs, dress hem sways, jacket swings from button point |
 | **3-5s** | **Turn** | Natural body rotation (180° or 360°) showing garment from behind/side. Hips lead, shoulders follow, hair swings with momentum. | Rear details visible: back pockets, rear fit, back drape, hem movement during rotation |
-| **5-8s** | **Pose** | Returns to face camera, settles into confident pose. Weight shifts to one leg, body settles. Direct eye contact with camera/mirror. | Clothing settles after movement: fabric drapes naturally, creases form at joints, silhouette is clearly defined |
+| **5-8s** | **Pose** | Returns to face camera, settles into confident pose. Weight shifts to one leg, body settles. Direct eye contact with camera. | Clothing settles after movement: fabric drapes naturally, creases form at joints, silhouette is clearly defined |
 
 ### Clothing-Specific Physics Keywords
 
@@ -236,7 +237,7 @@ Every Kling 3.0 video prompt follows this structure:
 
 | Move | How to Write | Best For |
 |------|-------------|----------|
-| **Locked + micro-jitter** (DEFAULT) | "Locked camera with subtle handheld micro-jitter, no directional drift" | Mirror selfie feel — most authentic |
+| **Locked + micro-jitter** (DEFAULT) | "Locked camera with subtle handheld micro-jitter, no directional drift" | Authentic handheld UGC feel |
 | **Slow dolly-in 3%** | "Slow dolly-in, camera pushes forward 3% over 8s toward the model" | Builds intimacy as she approaches |
 | **Slow tilt up** | "Slow tilt up from feet to face over 8s" | Dramatic outfit reveal (shoes to face) |
 | **Organic drift** | "Organic handheld drift, camera moves 2% right over 8s with micro-shake" | Dynamic energy for walk sequences |
@@ -249,15 +250,15 @@ Every Kling 3.0 video prompt follows this structure:
 [CAMERA MOVE — e.g., "Locked camera with subtle handheld micro-jitter"],
 [LENS — 35mm equivalent, full-body framing, 9:16 vertical].
 
-Subject: [description matching the influencer] woman in her [room type],
+Subject: [description matching the influencer] woman in her [bright room type],
 wearing [EXACT outfit description from Stage 2 — word-for-word identical
 to image prompt clothing description, including footwear and accessories].
 
-0-3s WALK: She walks toward the camera/mirror with a confident natural 
-stride — heel-first landing, rolling forward with visible weight transfer, 
-arms swinging naturally at her sides. [Clothing-specific physics from table 
+0-3s WALK: She walks toward the camera with a confident natural stride — 
+heel-first landing, rolling forward with visible weight transfer, arms 
+swinging naturally at her sides. [Clothing-specific physics from table 
 above]. Her expression is bright and happy — genuine wide smile, bright 
-eyes, looking at the mirror/camera with natural confidence and excitement.
+eyes, looking at camera with natural confidence and excitement.
 
 3-5s TURN: She begins a natural [180°/360°] turn to [her right/left] — 
 hips leading the rotation, shoulders following naturally, [hair description 
@@ -266,16 +267,16 @@ what becomes visible — back pockets, rear silhouette, back drape, etc.].
 Her head follows the turn, briefly looking over her shoulder [with a 
 playful/confident glance].
 
-5-8s POSE: She completes the turn to face the camera/mirror again, 
-settling into a confident pose — [specific pose from clothing-to-movement 
-map: weight shift, hand position, body angle]. Direct eye contact through 
-the mirror, warm satisfied smile. [Clothing settles after movement: fabric 
-drape, crease pattern, silhouette clearly visible].
+5-8s POSE: She completes the turn to face the camera again, settling 
+into a confident pose — [specific pose from clothing-to-movement map: 
+weight shift, hand position, body angle]. Direct eye contact with camera, 
+warm satisfied smile. [Clothing settles after movement: fabric drape, 
+crease pattern, silhouette clearly visible].
 
-Environment: [room type] with full-length [mirror type], [object 1], 
-[object 2], [object 3] — softly blurred bokeh. [Lighting — bright natural 
-window light from camera-left/right, 5500K daylight, true-colour fabric 
-rendering, gentle shadows].
+Environment: [bright room type] with [object 1], [object 2], [object 3] 
+— softly blurred bokeh. [Lighting — bright natural window light from 
+camera-left/right, 5500K daylight, true-colour fabric rendering, gentle 
+shadows].
 
 Texture: visible skin pores, stray hairs at hairline, [fabric texture — 
 denim weave/silk sheen/rib pattern/knit texture], natural fabric creasing, 
@@ -483,8 +484,8 @@ Deliver all outputs in this order:
 
 @influencer @product
 
-"[Full-body mirror selfie prompt — 11 layers, single paragraph, 
-face ~25-30%, full outfit visible head to toe]"
+"[Full-body standing shot prompt — 11 layers, single paragraph, 
+face ~25-30%, full outfit visible head to toe, no phone]"
 
 ---
 
@@ -551,7 +552,7 @@ clothing-specific physics, Kling 3.0 format, 2-6 lines]
 | 1 | Clothing type detection | Correctly identifies garment from @product | Wrong type or generic "clothing" |
 | 2 | Movement map selection | Correct primary walk + turn + pose for the garment type | Generic walk for all types |
 | 3 | Full-body framing | Face ~25-35%, full outfit visible head to toe | Face fills >50% or outfit cut off at legs |
-| 4 | Mirror selfie angle | Phone at chest height, mirror reflection, authentic TikTok feel | Studio portrait or catalogue shot angle |
+| 4 | Full-body standing shot | Straight-on camera at waist height, both hands free, no phone | Mirror selfie, phone in hand, or catalogue shot angle |
 | 5 | Expression mandatory | Enthusiastic, happy, confident — genuine smile, bright eyes | Neutral, flat, deadpan, or overly posed model face |
 | 6 | Clothing detail depth | Full description: type, fit, colour, texture, how it sits on body, construction details | Vague "wearing jeans" or missing material/fit |
 | 7 | Clothing physics in video | Fabric-specific movement (stretch, sway, drape, crease, settle) | Generic "clothing moves" or no fabric physics |
@@ -573,7 +574,7 @@ clothing-specific physics, Kling 3.0 format, 2-6 lines]
 | 23 | Description character count | Max 40 chars, personal experience, EN UK | Over 40 chars or product spec language |
 | 24 | Hashtag format | Exactly 3: #garment #quality #reach — lowercase, EN UK | Wrong count, irrelevant, or wrong format |
 | 25 | Fabric realism in image | Visible texture, natural creases, stitching detail mentioned | Smooth/plastic fabric look |
-| 26 | Environment correct | Bedroom/hallway with full-length mirror + 2-3 named objects | Studio backdrop, no mirror, or generic room |
+| 26 | Environment correct | Bedroom/hallway with 2-3 named objects, lived-in personal space | Studio backdrop or generic room |
 | 27 | Lighting true-colour | Bright natural daylight, 5500K, true-colour fabric rendering | Moody/dark or wrong colour cast on fabric |
 | 28 | Negative prompt complete | Includes mannequin pose, catalogue look, sliding feet, moonwalking, plastic fabric | Missing clothing-specific negatives |
 | 29 | Footwear specified | Complementary shoes described in both image and video prompts | Missing footwear or mismatched shoes |
