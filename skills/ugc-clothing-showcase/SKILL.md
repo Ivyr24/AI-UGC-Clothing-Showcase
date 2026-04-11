@@ -27,7 +27,7 @@ VIDEO (8 seconds — 1 shot)
 - **1 image prompt** for the start frame (full-body, 9:16)
 - **1 video prompt** describing the 8s walk + turn + pose arc (Kling 3.0)
 - **3 text overlay options** (short personal discovery, EN UK, TikTok compliant)
-- **Product info**: title (30 chars) + description (40 chars) + 3 hashtags
+- **Product info**: title (30 chars, includes size) + description (40 chars) + 3 hashtags
 - **Always silent** — no dialogue, no lip movement suggesting speech
 
 > **The formula**: confident model + clothing that looks amazing on her + natural movement showing fit from every angle + short punchy text overlay. The viewer thinks "I need those" — not "she's selling me something."
@@ -41,6 +41,7 @@ Before generating, confirm you have:
 1. **`@influencer`** — AI influencer image (uploaded). Visual anchor for the model's face, hair, body type. **REQUIRED.**
 2. **`@product`** — Clothing product photo, ideally flat lay or on model/mannequin. Ensures accurate garment details. **REQUIRED.**
 3. **Product name + type + key selling point** — Example: "TIA Push Up Jeans — high-waisted, flattering fit, lifts and shapes". **REQUIRED.**
+4. **Garment size** — Example: "Size 10", "M", "L". Used in the product title. **REQUIRED.**
 
 If `@influencer` or `@product` are missing, ask the user to provide them before proceeding.
 
@@ -377,12 +378,15 @@ Text is added by the user in post-production (CapCut, TikTok editor). Generate *
 
 ### Title (max 30 characters)
 
-Friend-to-friend recommendation format. As if sharing with a mate.
+Friend-to-friend recommendation format. As if sharing with a mate. **Must include garment size.**
 
-**Pattern**: "my best [item] find" / "the [item] everyone needs" / "my fave [item] rn"
+**Pattern**: "[Garment] here [size]" / "my best [item] [size]" / "[item] [size] — worth it"
+
+Based on the reference format "Jeans here xx" — simple, casual, includes size.
 
 **Rules**:
 - Max 30 characters (count precisely)
+- **MUST include the garment size** (S, M, L, XL, 6, 8, 10, 12, 14, etc.)
 - EN UK language
 - Lowercase (no caps except brand names if included)
 - Friend recommendation tone — casual, genuine
@@ -390,11 +394,12 @@ Friend-to-friend recommendation format. As if sharing with a mate.
 - Must feel like a girl telling her friend about something great she found
 
 **Examples**:
-- "my best jeans find ever" (24 chars)
-- "these jeans changed my life" (28 chars)
-- "the dress everyone's wearing" (29 chars)
-- "my fave jacket this winter" (27 chars)
-- "finally found the perfect fit" (30 chars)
+- "jeans here 10" (14 chars)
+- "dress here S" (12 chars)
+- "my best jeans find size 12" (27 chars)
+- "these jeans M — trust me" (25 chars)
+- "the dress everyone needs L" (27 chars)
+- "jacket here XL" (15 chars)
 
 ### Description (max 40 characters)
 
@@ -433,14 +438,24 @@ One short sentence describing the key benefit or personal experience.
 - Jacket: `#jacket #winterstyle #fyp`
 - Skirt: `#midiskirt #ootd #trending`
 
-### Output Format
+### Output Format — COPY-READY
 
 ```
-### Product Info
+### Product Info — COPY-READY
 
-**Title** (≤30 chars): [friend recommendation title] — [X chars]
-**Description** (≤40 chars): [personal experience] — [X chars]
-**Hashtags**: #[garment] #[quality] #[reach]
+━━━ Title (≤30 chars) ━━━
+
+[friend recommendation title with size] — [X chars]
+
+━━━ Description (≤40 chars) ━━━
+
+[personal experience] — [X chars]
+
+━━━ Hashtags ━━━
+
+#[garment] #[quality] #[reach]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ---
@@ -483,21 +498,36 @@ clothing-specific physics, Kling 3.0 format, 2-6 lines]
 ## 4. Text Overlay Options — COPY-READY (EN UK)
 
 ━━━ Option 1 — [Pattern] ━━━
+
 [text — max 10 words]
 
 ━━━ Option 2 — [Pattern] ━━━
+
 [text — max 10 words]
 
 ━━━ Option 3 — [Pattern] ━━━
+
 [text — max 10 words]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ---
 
-## 5. Product Info
+## 5. Product Info — COPY-READY
 
-**Title** (≤30 chars): [title] — [X chars]
-**Description** (≤40 chars): [description] — [X chars]
-**Hashtags**: #[garment] #[quality] #[reach]
+━━━ Title (≤30 chars) ━━━
+
+[title with size] — [X chars]
+
+━━━ Description (≤40 chars) ━━━
+
+[description] — [X chars]
+
+━━━ Hashtags ━━━
+
+#[garment] #[quality] #[reach]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ---
 
@@ -539,7 +569,7 @@ clothing-specific physics, Kling 3.0 format, 2-6 lines]
 | 19 | Text overlay style | Personal discovery, friend tone, clean and minimal | Story-style, emoji-heavy, or salesy |
 | 20 | Text overlay EN UK | UK spelling and casual British register throughout | US English or mixed language |
 | 21 | TikTok compliance | No banned words, no body-shaming, no fake urgency | Any banned phrase present |
-| 22 | Title character count | Max 30 chars, friend recommendation tone, EN UK | Over 30 chars or salesy tone |
+| 22 | Title character count | Max 30 chars, includes garment size, friend recommendation tone, EN UK | Over 30 chars, missing size, or salesy tone |
 | 23 | Description character count | Max 40 chars, personal experience, EN UK | Over 40 chars or product spec language |
 | 24 | Hashtag format | Exactly 3: #garment #quality #reach — lowercase, EN UK | Wrong count, irrelevant, or wrong format |
 | 25 | Fabric realism in image | Visible texture, natural creases, stitching detail mentioned | Smooth/plastic fabric look |
