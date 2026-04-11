@@ -185,6 +185,8 @@ shot, studio backdrop, fashion editorial, overly posed, DSLR."
 
 Generate **1 video prompt** for the 8-second walk + turn + pose sequence.
 
+> **NO MARKERS**: The video prompt does NOT use `@influencer`, `@product`, or any reference markers. Write the subject description and clothing description directly — no placeholders. Only the image prompt (Stage 2) uses markers.
+
 ### Kling 3.0 Master Formula (5 Layers)
 
 Every Kling 3.0 video prompt follows this structure:
@@ -246,7 +248,7 @@ Every Kling 3.0 video prompt follows this structure:
 [CAMERA MOVE — e.g., "Locked camera with subtle handheld micro-jitter"],
 [LENS — 35mm equivalent, full-body framing, 9:16 vertical].
 
-Subject: [description from @influencer] woman in her [room type],
+Subject: [description matching the influencer] woman in her [room type],
 wearing [EXACT outfit description from Stage 2 — word-for-word identical
 to image prompt clothing description, including footwear and accessories].
 
@@ -283,9 +285,9 @@ suggesting speech. Background audio: natural room ambience only.
 
 Duration: 8s, 9:16 vertical, 24fps.
 
-Keep identity exactly (matching @influencer), keep clothing, hair, 
-accessories, and footwear. Keep background layout. No new objects, no text 
-on screen, stable geometry, no flicker.
+Keep identity exactly, keep clothing, hair, accessories, and footwear. 
+Keep background layout. No new objects, no text on screen, stable 
+geometry, no flicker.
 
 Negative: cartoonish, 3D render, smooth plastic skin, plastic fabric, 
 stiff fabric, floating limbs, sliding feet, moonwalking, text morphing, 
@@ -527,7 +529,7 @@ clothing-specific physics, Kling 3.0 format, 2-6 lines]
 | 9 | Turn description | Specific rotation (180°/360°), hips leading, hair swing, rear view | "She turns around" without detail |
 | 10 | Pose specificity | Named pose: weight shift, hand position, body angle | "She poses" without specifics |
 | 11 | 3-beat timing | Walk (0-3s) + turn (3-5s) + pose (5-8s) timed to 8 seconds | Missing beats or wrong timing |
-| 12 | @influencer/@product markers | Both on first line of image prompt | Any marker missing |
+| 12 | @influencer/@product markers | Both on first line of image prompt ONLY (never in video prompt) | Markers missing from image prompt OR markers present in video prompt |
 | 13 | Same outfit across prompts | Exact clothing description word-for-word in image AND video prompts | Drift between image and video prompts |
 | 14 | Camera move (Kling 3.0) | ONE move specified with direction + speed (35mm lens) | Multiple moves or vague "camera follows" |
 | 15 | Kling 3.0 format | 2-6 lines, master formula layers, constraints + negative | Verbose essay or missing layers |
