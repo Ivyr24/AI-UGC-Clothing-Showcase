@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(www.atlabs.ai)",
+      "WebFetch(higgsfield.ai)",
+      "WebFetch(glif.app)",
+      "WebFetch(blog.fal.ai)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Read(.claude/*)"
+    ],
+    "deny": []
+  }
+}
