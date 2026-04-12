@@ -46,7 +46,7 @@ Before generating, confirm you have:
 2. **`@influencer`** — AI influencer image. The face, skin, hair and body type of the person who will appear in the generated video. **REQUIRED.**
 3. **`@product`** — Product photo (clothing, makeup, skincare, accessories, etc.). **REQUIRED.**
 4. **Product name + type + niche + key selling point** — Example: "TIA Push Up Jeans — fashion — lifts and shapes", or "Glow Serum — skincare — 7-day radiance". **REQUIRED.**
-5. **Size (if applicable)** — For clothing/apparel. Example: "Size 10", "M". Used in title.
+5. **Size (clothing only)** — ONLY required for clothing/apparel. Example: "Size 10", "M". Used in title. For non-clothing products (makeup, skincare, etc.) size is NOT needed — title uses friend-recommend format instead.
 
 If any required input is missing, ask the user to provide it before proceeding.
 
@@ -356,36 +356,64 @@ Text is added by the user in post-production. Generate **3 engaging variations**
 
 ## Stage 5 — Product Info
 
-### Title — Fixed Compact Format: `[item] here xx`
+### Title — Format Depends on Niche
 
-Based on the reference format "Jeans here xx" — always compact, same short length.
+The title format **depends on whether the product is clothing or not**. Pick the right path:
 
-**Pattern**: `[garment/product type] here [suffix]`
+---
 
-Where `[suffix]` is one of:
-- `xx` (kisses — the reference default)
-- `x` (single kiss)
-- A size if clothing — `10`, `12`, `S`, `M`, `L`
-- `♡` (only if the user wants a light emoji)
+#### Path A — Clothing / Apparel: `[item] here [size or xx]`
+
+Based on the reference format "Jeans here xx" — compact, always includes size or kiss suffix.
+
+**Pattern**: `[garment type] here [size/xx]`
+
+Where the suffix is:
+- A size — `10`, `12`, `S`, `M`, `L`, `XL`
+- `xx` (kisses — reference default, if size not used)
 
 **Rules**:
-- Max 30 characters
-- Ideally 10-20 characters (matching "Jeans here xx" compact feel)
-- Lowercase
-- EN UK
-- Always ends with suffix (xx / x / size / ♡)
-- No exclamation marks, no fake urgency
+- Max 30 characters (ideally 10-20 characters)
+- Lowercase, EN UK
+- **Always include size** when the garment has sizing
+- No exclamation marks
 
-**Examples (matching "Jeans here xx" feel)**:
-- `jeans here xx` (13 chars)
+**Examples (clothing)**:
 - `jeans here 10` (13 chars)
-- `dress here xx` (13 chars)
-- `gloss here xx` (13 chars)
-- `serum here xx` (13 chars)
-- `blush here x` (12 chars)
+- `dress here S` (12 chars)
 - `jacket here M` (13 chars)
 - `skirt here 12` (13 chars)
-- `foundation here ♡` (17 chars)
+- `jeans here xx` (13 chars — if size skipped)
+
+---
+
+#### Path B — Non-Clothing (Makeup, Skincare, Accessories, Lifestyle, etc.): `my best [item] …`
+
+Friend-to-friend recommendation tone — as if a girl is telling her mate about something great she found. **No size needed** — size isn't relevant for these products.
+
+**Patterns**:
+- `my best [item] …` (classic friend-recommend)
+- `the [item] everyone needs`
+- `my fave [item] rn`
+- `[item] that actually works`
+- `finally found the one ✨`
+
+**Rules**:
+- Max 30 characters (count precisely)
+- Lowercase, EN UK
+- Friend-to-friend casual tone — genuine, not salesy
+- `…` (ellipsis) or soft emoji allowed at end
+- No size, no exclamation marks
+
+**Examples (non-clothing)**:
+- `my best lip gloss ever …` (24 chars)
+- `my fave blush rn ✨` (18 chars)
+- `the serum everyone needs` (24 chars)
+- `my best skincare find` (21 chars)
+- `my best perfume ever …` (22 chars)
+- `the mascara that works` (22 chars)
+- `finally found my shade 🥹` (24 chars)
+- `my fave highlight rn` (20 chars)
 
 ### Description (max 40 characters)
 
@@ -429,9 +457,9 @@ One short sentence describing the key benefit or personal experience. Light emoj
 ```
 ### Product Info — COPY-READY
 
-━━━ Title (≤30 chars, compact format) ━━━
+━━━ Title (≤30 chars) ━━━
 
-[item] here xx — [X chars]
+[clothing: "[item] here [size/xx]"  |  non-clothing: "my best [item] …"] — [X chars]
 
 ━━━ Description (≤40 chars) ━━━
 
@@ -509,9 +537,9 @@ constraints + negative. NO MARKERS.]
 
 ## 5. Product Info — COPY-READY
 
-━━━ Title (≤30 chars, compact format) ━━━
+━━━ Title (≤30 chars) ━━━
 
-[item] here xx — [X chars]
+[clothing: "[item] here [size/xx]"  |  non-clothing: "my best [item] …"] — [X chars]
 
 ━━━ Description (≤40 chars) ━━━
 
@@ -563,7 +591,7 @@ constraints + negative. NO MARKERS.]
 | 19 | Text overlay EN UK | UK spelling + casual British register | US English or mixed |
 | 20 | Text overlay word count | 10-25 words per option | <8 words (too short) or >30 words (too long) |
 | 21 | TikTok compliance | No banned words, no fake urgency, no absolute claims | Any banned phrase |
-| 22 | Title compact format | `[item] here xx` pattern — 10-20 chars typical, ≤30 max | Wrong format or over 30 chars |
+| 22 | Title format correct for niche | Clothing: `[item] here [size/xx]` (includes size). Non-clothing: `my best [item] …` friend-recommend tone. ≤30 chars | Wrong path for niche, missing size on clothing, or salesy/over 30 chars |
 | 23 | Title lowercase EN UK | All lowercase (except brand), EN UK spelling | Caps or US English |
 | 24 | Description character count | ≤40 chars including emoji, personal tone | Over 40 chars or product spec language |
 | 25 | Hashtag count + format | Exactly 3 lowercase EN UK hashtags: #product #niche #reach | Wrong count, caps, or irrelevant |
