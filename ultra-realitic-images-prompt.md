@@ -1,28 +1,29 @@
 ---
-name: ugc-ultra-realistic-clothing-photo-prompt
-description: "Generate highly detailed, ultra-realistic AI photo prompts for UGC-style full-body clothing showcase images. The default output format is always vertical 9:16 (portrait/smartphone orientation). Optimised for full-body mirror selfies showing how clothing fits and looks on an influencer model. Every prompt must look like a real person filming herself in front of a mirror, showing off a new outfit she loves."
+name: ugc-ultra-realistic-photo-prompt
+description: "Generate highly detailed, ultra-realistic AI photo prompts for UGC (User-Generated Content) style images of real people. The default output format is always vertical 9:16 (portrait/smartphone orientation) unless the user explicitly requests otherwise. Use this skill whenever the user wants to create prompts for AI-generated photos of a person (model, creator, spokesperson) that must look authentic, unpolished, and realistic — as if taken spontaneously on a smartphone. Trigger on phrases like \"write a prompt for a UGC photo\", \"create a realistic photo prompt\", \"AI photo of a model\", \"generate a prompt for an ultra-realistic image\", \"UGC-style image prompt\", \"prompt for a realistic person photo\", or any time the user asks Claude to write prompts to generate AI photos that look real, candid, or smartphone-captured. Always use this skill — do not attempt to write the prompts from memory alone. Markers: use @model for the AI model/influencer image and @product for the product image."
 ---
 
-# UGC Ultra-Realistic Clothing Photo Prompt Generator
+# UGC Ultra-Realistic Photo Prompt Generator
 
-Generate objective, highly specific, production-ready AI image prompts that produce ultra-realistic UGC-style full-body clothing photos. Every prompt MUST be so specific that a human photographer could recreate it — with concrete numbers, real-world lighting, exact body positioning, fabric details, and named background objects.
+Generate objective, highly specific, production-ready AI image prompts that produce ultra-realistic UGC-style photos. Every prompt MUST be so specific that a human photographer could recreate it — with concrete numbers, real-world lighting, exact hand positions, and named background objects.
 
-> **Default format: vertical 9:16 (portrait orientation)**. Every prompt specifies `vertical 9:16 frame`.
+> **Default format: vertical 9:16 (portrait orientation)**. Every UGC prompt specifies `vertical 9:16 frame`. Exception only if the user explicitly requests another ratio.
 
 ---
 
-## Core Philosophy: Clothing First, Face Second
+## Core Philosophy: Specificity = Realism
 
-Unlike beauty/skincare prompts (face fills 60-90%), clothing prompts prioritise **full-body visibility**. The garment is the hero — the model's face and expression support the outfit, not the other way round.
+Vague prompts produce generic AI slop. The difference between a winning UGC image prompt and a mediocre one is **quantified specificity**:
 
-| Beauty Prompt (BAD for clothing) | Clothing Prompt (GOOD) |
-|----------------------------------|----------------------|
-| "Close-up selfie, face ~85% of frame" | "Full-body mirror selfie, model fills ~85% frame height, face ~30%" |
-| "She holds a product near chin" | "She's wearing the high-waisted jeans from @product, fabric hugging hips" |
-| "Bathroom vanity background" | "Bright bedroom with full-length mirror, clothing rack, trainers by door" |
-| "Sharp focus on face and product" | "Sharp focus on model and clothing simultaneously, fabric texture visible" |
+| Vague (BAD) | Specific (GOOD) |
+|-------------|-----------------|
+| "Close-up photo of a woman" | "Close-up smartphone selfie, eye-level, face filling ~85% of a vertical 9:16 frame" |
+| "She holds a product" | "Her right hand holds the concealer tube from @product near chin/chest height in the lower-right area of the frame, fingers naturally curved and relaxed" |
+| "Natural lighting" | "Soft warm natural window light coming from camera-left to create a golden-hour morning feel with gentle directional shadows" |
+| "Casual background" | "Kitchen background with a countertop edge, mugs, and small appliances — softly blurred but present in frame" |
+| "Realistic skin" | "Preserve subtle stray hairs at the hairline, natural freckles, visible pores, subtle skin translucency — no beauty filter, no smoothing" |
 
-**Rule**: The entire outfit must be visible from head to toe. Face occupies ~25-35% of frame. The clothing fit, texture, and movement potential must be clearly communicated.
+**Rule**: Every prompt must specify **numbers** (face %, camera height, lens mm, DOF), **directions** (camera-left/right, above/below chin), and **named objects** (not "kitchen items" but "mugs, small appliances, countertop edge").
 
 ---
 
@@ -31,340 +32,343 @@ Unlike beauty/skincare prompts (face fills 60-90%), clothing prompts prioritise 
 Write the prompt as **one flowing paragraph** (never a numbered list). Weave all 11 layers naturally in this order:
 
 ```
-1. SHOT TYPE          -> "Ultra-realistic full-body [mirror selfie/standing shot] smartphone photo"
-2. CAMERA ANGLE       -> "Phone held at [chest/face] height, [mirror reflecting full body / tripod-level wide]"
-3. BODY OCCUPATION    -> "Model fills ~[80-90]% of vertical 9:16 frame height, face ~[25-35]%"
-4. EXPRESSION         -> [Confident happy smile + eye direction + why she feels this way]
-                         MANDATORY: enthusiasm and happiness — genuine smile, bright eyes, 
-                         positive energy. NEVER neutral, flat, or deadpan.
-5. CLOTHING DETAIL    -> [Full @product description: garment type, fit, colour, texture, 
-                         details (buttons, stitching, wash, pattern), how it sits on body 
-                         (hugs hips, drapes shoulders, cinches waist, tapers at ankle)]
-6. POSE               -> [Standing pose adapted to clothing type: weight on one leg, hand 
-                         on hip, relaxed stance, arm at side — shows garment silhouette]
-7. FOOTWEAR + STYLING -> [Shoes that complement outfit + accessories (jewellery, belt, bag)]
-8. FOCUS              -> "Sharp focus on model and clothing simultaneously, fabric texture visible"
-9. ENVIRONMENT        -> [Room type + full-length mirror + 2-3 NAMED background objects] 
-                         softly blurred bokeh
-10. LIGHTING          -> [Source + direction + colour temperature — bright natural daylight 
-                         preferred for true-colour fabric rendering]
-11. SKIN + FABRIC REALISM -> [Skin: visible pores, stray hairs, no filter. Fabric: visible 
-                         weave/texture, natural creases, stitching detail, how light catches 
-                         material, realistic drape]
+1. SHOT TYPE        →  Ultra-realistic [close-up/macro/medium close-up] smartphone [selfie/photo]
+2. CAMERA ANGLE     →  [eye-level / slightly below chin / 1cm above eye-line / chest-up]
+3. FACE OCCUPATION  →  subject's face occupying ~[65–90]% of a vertical 9:16 frame
+4. EXPRESSION       →  [specific emotion + eye direction + mouth state + why she feels it]
+5. HAND + PRODUCT   →  [which hand + where in frame + grip style + label visibility]
+6. FOCUS            →  tack-sharp on face AND product simultaneously
+7. FRAMING          →  off-centre composition + barrel distortion + shallow DOF focal plane
+8. ENVIRONMENT      →  [room type + 2–4 NAMED background objects] softly blurred bokeh
+9. LIGHTING         →  [source + direction camera-left/right + colour temperature + mood]
+10. SKIN REALISM    →  stray hairs at hairline, freckles/pores, imperfections, no filter
+11. FINAL MOOD      →  warm, intimate, realistic / spontaneous UGC vibe
 ```
 
 ---
 
-## Step 1 — Gather Clothing Information
+## Step 1 — Gather Character Information
 
-Before writing, collect (or infer from `@product`):
+Before writing, collect (or infer):
 
-- **Garment type** (jeans, dress, top, jacket, skirt, set, jumpsuit, activewear)
-- **Fit** (slim, relaxed, oversized, tailored, high-waisted, low-rise, cropped)
-- **Colour + wash** (medium wash denim, navy ribbed knit, cream silk, black structured)
-- **Texture + material** (denim, cotton, silk, knit, linen, polyester blend, leather)
-- **Details** (buttons, zip, pockets, pattern, embroidery, distressing, stitching)
-- **How it sits on the body** (hugs hips, drapes from shoulders, cinches at waist, flows from hip)
-- **Complementary styling** (what shoes, accessories, and other clothing complete the look)
-
----
-
-## Step 2 — Specify Body Occupation by Shot Role
-
-Full-body shots need precise body-to-frame ratios:
-
-| Shot Role | Face % | Body Height % | Use When |
-|-----------|--------|---------------|----------|
-| **Full-body mirror selfie** | 25-30% | 85-90% | Default — shows complete outfit head to toe |
-| **Full-body standing (tripod)** | 20-25% | 90-95% | When mirror isn't appropriate, more editorial |
-| **Three-quarter body** | 30-40% | 70-80% | Tops, jackets — waist-up emphasis |
-
-> **Always state the exact percentage in the prompt** — don't write "full body," write "model fills ~85% of vertical 9:16 frame height, face ~30%."
+- **Age & gender** (e.g., "woman, 24 years old")
+- **Skin tone / ethnicity** (for realistic skin texture matching)
+- **Hair** (colour, length, texture, specific details like auburn-red, chestnut with blonde highlights)
+- **Distinguishing features** (freckles, beauty mark, eye colour, stray hair style)
+- **Typical style** (casual, minimal makeup, specific outfit)
+- **Product or action** (what product, how it's being held, what she's doing with it)
+- **Target platform**: TikTok / Instagram Reels / YouTube Shorts
+- **Emotional goal**: enthusiasm, curiosity, discovery, trust, excitement
 
 ---
 
-## Step 3 — Specify Camera Angle for Clothing
+## Step 2 — Specify Face Occupation by Shot Role
 
-| Term | Meaning | Best For |
-|------|---------|----------|
-| **"Phone at chest height, mirror reflecting full body"** | Classic TikTok mirror selfie | Default — most authentic UGC feel |
-| **"Phone at face height, slight downward angle"** | Higher selfie angle, elongates body | Flattering for most body types |
-| **"Propped at waist height, slight upward angle"** | Low-angle, makes legs look longer | Jeans, trousers, skirts |
-| **"Tripod-level, straight-on"** | No mirror, direct shot | Editorial, OOTD posts |
+Different shots need different face-to-frame ratios. Be explicit:
 
-> **Writing rule**: always specify phone/camera position AND the resulting angle — e.g., "phone held at chest height, mirror reflecting full body head to toe, slight downward angle."
+| Shot Role | Face Occupation | Use When |
+|-----------|----------------|----------|
+| **Extreme macro beauty hook** | 85–90% | Opening beauty shot, face is the scroll-stopper, no product visible yet |
+| **Tight selfie with product** | 65–75% | Face + product both visible, product held near chin/chest |
+| **Medium close-up demo** | 50–60% | Showing product in active use (applying, mixing), hands fully visible |
+| **Chest-up recommendation** | 45–55% | Close shot for product reveal with both face and product prominent |
+
+> **Always state the exact percentage in the prompt** — don't write "close-up," write "face occupying ~85% of a vertical 9:16 frame."
 
 ---
 
-## Step 4 — Specify Clothing Detail with Precision
+## Step 3 — Specify Camera Angle with Precision
 
-This is the most important layer for clothing prompts. Describe the garment as specifically as a stylist would:
+Never write "eye-level" alone. Specify:
 
-### Clothing Description Formula
+| Term | Meaning | Effect |
+|------|---------|--------|
+| **"Eye-level"** | Camera lens at pupil height | Neutral, natural selfie |
+| **"Slightly below chin"** | Camera 2–4cm below chin line | Intimate, upward selfie (most common UGC) |
+| **"1–2cm above eye-line"** | Camera slightly above eyes | Flattering, "hero" angle |
+| **"Chin-up 3/4 turn"** | Face turned ~20–30° from centre | Adds dynamism to selfie |
+| **"Front-facing direct"** | Perfectly frontal, no turn | Authority, eye contact hook |
+
+> **Writing rule**: always combine two specs — e.g., "eye-level or slightly below chin, with a subtle 3/4 turn to camera-right."
+
+---
+
+## Step 4 — Specify Hand + Product Interaction with Physics
+
+This is where most AI images fail (floating hands, 6 fingers, wrong grip). Write the grip with physical detail:
+
+### Hand Anchoring Formula
 
 ```
-Wearing [fit] [garment type] in [colour/wash] from @product — [material/texture], 
-[key construction detail (stitching, buttons, zip, pockets)], 
-[how it sits on body (hugs, drapes, cinches, flows)], 
-[hem/ankle/neckline detail], [any pattern or distressing].
+[Which hand] holds the [product name + packaging detail] from @product
+[where in frame — lower-right/left/chin-height/chest-level],
+fingers [naturally curved / firmly gripping the bottle edge / wrapped around the tube],
+[thumb position — resting on label / pressing the cap / along the side],
+[label visibility — facing camera / partially visible / angled 15° to camera]
 ```
 
-### Examples by Category
+> **Marker note**: Always open every prompt with `@model @product` on the first line. `@model` references the AI model image (face, body, identity). `@product` references the product image. These markers bind the identity and product to the render.
 
-| Category | Good Clothing Description |
-|----------|--------------------------|
-| **Jeans** | "Wearing high-waisted slim-fit jeans in medium-wash blue denim from @product — visible topstitching at pockets, slight natural creasing at knees, fabric hugging hips and thighs with flattering fit, tapered ankle sitting just above her white trainers, subtle fading at thighs, copper button at waistband" |
-| **Dress** | "Wearing a midi wrap dress in sage green satin from @product — V-neckline with self-tie waist, fabric draping smoothly from bust to hip then flowing to mid-calf, subtle sheen catching window light, gentle gather at the waist creating an hourglass silhouette, hem skimming her calves" |
-| **Top** | "Wearing a fitted ribbed crop top in off-white cotton from @product — fine rib texture visible, crew neckline sitting flat, fabric following the curve of her torso without pulling, cropped hem ending 3cm above her waistband, short sleeves hugging upper arms" |
-| **Jacket** | "Wearing an oversized leather biker jacket in black from @product — asymmetric silver zip, structured shoulders extending 2cm past natural shoulder line, supple leather with natural grain visible, sitting open over a white tee, hem hitting at hip level" |
-| **Skirt** | "Wearing a pleated midi skirt in dusty rose from @product — knife pleats falling from a flat waistband, lightweight fabric with visible pleat structure, hem ending at mid-calf, gentle A-line silhouette, fabric catching light in the fold creases" |
+### Examples
 
-> **NEVER write**: "wearing jeans." **ALWAYS write**: fit, colour/wash, material, construction details, how it sits on the body, hem detail.
+| Product Type | Good Hand Specification |
+|-------------|------------------------|
+| **Serum bottle** | "Her left hand grips the amber glass serum bottle from @product near her left cheek, fingers curled around the body, thumb resting on the label, dropper cap facing up, label visible and readable" |
+| **Lipstick tube** | "Her right hand holds the lipstick tube from @product in the lower-right area of the frame near her chin, index finger and thumb pinching the base, cap pointed upward toward her lips, gold lettering facing camera" |
+| **Concealer tube** | "Her right hand holds the concealer tube from @product near chin/chest height in the lower-right area of the frame, fingers naturally curved and relaxed around the tube, tip angled 20° toward her face" |
+| **Supplement jar** | "Her left hand cradles the supplement jar from @product against her chest, palm supporting the base, fingers fanned around the lower curve, label tilted 10° toward camera for readability" |
 
----
-
-## Step 5 — Specify Pose Adapted to Clothing Type
-
-The pose must show the garment's best features:
-
-| Clothing Type | Recommended Pose | Why |
-|---------------|-----------------|-----|
-| **Jeans/Trousers** | Weight on one leg, opposite knee slightly bent, one hand on hip | Shows hip fit, thigh silhouette, creates natural body curve |
-| **Dress** | Standing with slight hip shift, one arm relaxed, other touching hair or waist | Shows drape, waist definition, overall silhouette |
-| **Top/Blouse** | Shoulders back, one hand at side, other holding phone (mirror selfie) | Shows neckline, sleeve fit, torso shape |
-| **Jacket/Coat** | One hand in pocket or on lapel, shoulders square | Shows structure, length, how it sits open/closed |
-| **Skirt** | Weight shifted to one hip, creating natural fabric movement | Shows pleat/fabric fall, waist fit, hem length |
-| **Set/Co-ord** | Relaxed confident stance, both arms visible | Shows full coordination of pieces |
+> **NEVER write**: "she's holding the product." **ALWAYS write**: where, which hand, finger position, thumb placement, label angle.
 
 ---
 
-## Step 6 — Specify Lighting for True Colour Rendering
+## Step 5 — Specify Lighting with Real-World Language
 
-Clothing prompts need **bright, true-colour lighting** — the viewer must see the real colour and texture of the fabric.
+Never write "natural lighting." Name the actual source, direction, and colour:
 
-### Light Source Library (Clothing-Optimised)
+### Light Source Library
 
 | Source | When to Use | How to Write |
 |--------|-------------|--------------|
-| **Bright natural window light** | Default for all clothing | "Bright natural window light from camera-left, 5500K daylight, true-colour rendering of fabric — no warm cast distorting garment colour" |
-| **Soft diffused daylight** | Overcast day, even lighting | "Soft diffused daylight from large window, even illumination across full body, no harsh shadows, fabric colour appears true to life" |
-| **Ring light + window** | TikTok creator vibe | "Ring light reflection in mirror, warm 4800K frontal fill, supplemented by window light from camera-right for depth" |
-| **Golden hour bedroom** | Warm, cosy outfit shots | "Low golden-hour sunlight from window camera-left, warm amber tones, fabric catches warm highlights on one side" |
+| **Soft warm window light** | Default for bedrooms, kitchens, bathrooms | "Soft warm natural window light coming from camera-left (her right) to create a golden-hour morning feel" |
+| **Golden hour late afternoon** | Warm emotional hook moments | "Low golden-hour sunlight streaming in from a west-facing window camera-right, warm amber cast on the left side of her face" |
+| **Overhead bathroom warm** | Skincare bathroom shots | "Warm 5500K overhead bathroom light, soft and flattering, minimal shadow under the chin, faint reflection in the mirror behind" |
+| **Kitchen morning diffused** | Supplement/food shots | "Bright morning kitchen window light from camera-left, cool-warm mix, soft directional shadows, subtle reflection on the countertop" |
+| **Ring light glow (TikTok)** | Beauty/makeup creator vibe | "Circular ring light reflection visible in both pupils, soft frontal even fill, warm 4800K, minimal shadows on the face" |
+| **Bedroom lamp + LED strip** | Cozy evening beauty | "Warm bedside lamp from camera-right plus purple LED strip bounce on her left cheek, cosy 3200K ambience" |
 
-> **Critical**: Clothing needs bright, even lighting to show true colour. Dark or moody lighting hides fabric detail and distorts colour perception.
+### Direction Must Be Absolute
+
+Always specify which side the light comes from:
+- ❌ "Side light"
+- ✅ "Soft warm window light from camera-left (her right side)"
+- ✅ "Bright morning kitchen light from camera-right, bouncing subtly on the backsplash behind her"
 
 ---
 
-## Step 7 — Specify Environment with Full-Length Mirror
+## Step 6 — Specify Environment with Named Objects
 
-Clothing showcase environments must include a **full-length mirror** and feel like a real bedroom/hallway.
+Never write "kitchen" or "bathroom" alone. Always list 2–4 specific, named objects visible in the softly blurred bokeh background.
 
-### Environment Library
+### Environment Library by Product Category
 
-| Setting | Room | Named Background Objects (pick 2-3) |
-|---------|------|-------------------------------------|
-| **Bedroom mirror** | Bright bedroom | "Full-length mirror on wall, unmade linen bed, wooden clothing rack with hangers, white trainers by the door" |
-| **Hallway mirror** | Bright hallway | "Full-length freestanding mirror, coat hooks on wall, shoe rack, door frame visible" |
-| **Closet/Dressing area** | Walk-in closet | "Full-length door mirror, shelves with folded clothes, hanging rail with coloured hangers, shoe boxes stacked" |
-| **Bathroom (large)** | Bright bathroom | "Large wall mirror, marble countertop, folded towels, small plant" |
+| Product Category | Room | Named Background Objects (pick 2–4) |
+|-----------------|------|-------------------------------------|
+| **Skincare** | Bathroom vanity | "Skincare bottles, cotton pads, small gold face roller on the counter, frosted glass mirror edge" |
+| **Mascara / Lash** | Bedroom vanity | "Ceramic cup of makeup brushes, perfume bottle with amber liquid, open mascara tube, vanity mirror edge reflecting warm light" |
+| **Lip product** | Bedroom near window | "Stack of lip products on the dresser, compact mirror face-down, phone charging cable, jewellery tray" |
+| **Supplement / Powder** | Kitchen counter | "Glass blender with pulp residue, half-peeled banana, stainless steel water bottle, ceramic bowl with almonds" |
+| **Concealer / Foundation** | Kitchen or living area | "Countertop edge, white ceramic mugs on a wooden shelf, small coffee machine, a cork coaster" |
+| **Hair product** | Bathroom mirror area | "Wooden paddle hair brush, hair clips scattered, matte ceramic diffuser, folded grey towel" |
+| **Fashion / Accessory** | Bedroom with wardrobe | "Clothes on hangers softly out of focus, open jewellery drawer, sneakers on the floor, unmade linen bedding" |
+| **Gadget / Tech** | Desk / living room | "Open laptop, notebook with pen, coiled USB cable, succulent plant in a terracotta pot" |
+| **Cleaning / Home** | Kitchen counter | "Spray bottle, folded microfibre cloth, green plant leaf edge, sink faucet reflecting light" |
 
 ### Writing Rule
 
 ```
-[Room type] with full-length [mirror type], [object 1], [object 2], [object 3] — 
-softly blurred bokeh, model and clothing in sharp focus, 
-[lived-in detail — "not staged, personal space feel"]
+[Room type] background with [object 1], [object 2], [object 3] — softly blurred bokeh,
+face and product in sharp focus, [specific detail of how background reads —
+"faintly but unobtrusively", "warm ambient colour bounce", "lived-in, not staged"]
 ```
 
 ---
 
-## Step 8 — Specify Skin + Fabric Realism
+## Step 7 — Specify Skin Realism Explicitly
 
-AI defaults to plastic skin AND plastic fabric. Fight both every time:
+AI defaults to plastic skin. Fight it every single time with named micro-details:
 
-### Skin Realism (include 3-4 per prompt)
+### Skin Realism Checklist (include 4–6 per prompt)
 
-- "Visible pores across cheeks and nose"
-- "Stray hairs at hairline"
-- "Natural skin texture, no filter, no smoothing"
-- "Subtle under-eye shadows"
-- "Fine flyaway hairs catching the light"
+- "Visible pores across the cheeks and nose bridge"
+- "Subtle stray hairs at the hairline"
+- "Natural freckles across the nose and cheeks"
+- "Faint redness around the nose and eye corners"
+- "Subtle skin translucency at the nose tip and lips"
+- "Under-eye shadows with natural blue-violet tint"
+- "Fine peach fuzz visible along the jawline in window light"
+- "Natural shine on the forehead and nose"
+- "Slight asymmetry in facial expression (one corner of mouth higher)"
+- "Tiny flyaway hairs catching the light"
 
-### Fabric Realism (include 3-4 per prompt)
-
-- "Visible denim weave / rib texture / knit pattern"
-- "Natural creasing at joints (knees, elbows, waist)"
-- "Stitching detail visible at seams and pockets"
-- "Fabric catching light differently at angles (sheen, matte)"
-- "Slight fading at wear points (thighs, elbows)"
-- "Natural drape — fabric follows gravity, not painted on"
-- "Subtle wrinkles from sitting/moving — not freshly ironed"
-- "Button/zip hardware with realistic metallic sheen"
-
-> **Fabric rule**: Write at least **3 specific fabric details** per prompt. Example: "Visible denim weave at thighs, natural creasing at knees, topstitching at pockets catching the light, subtle fading where fabric stretches."
+> **Skin rule**: Write at least **3 specific imperfections** per prompt. Example: "Preserve subtle stray hairs at the hairline, natural freckles across the nose, visible pores on the cheeks, and an authentic UGC look (no commercial glam or stylised filters)."
 
 ---
 
-## Step 9 — Compose the Full Prompt
+## Step 8 — Compose the Full Prompt
 
-Combine all 11 layers into one flowing paragraph.
+Combine all 11 layers into one flowing paragraph. Every prompt must follow this quality bar:
 
-### Gold Standard Template (Jeans)
-
-```
-@influencer @product
-
-"Ultra-realistic full-body mirror selfie, phone held at chest height angled 
-slightly downward, full body visible head to toe in a large bedroom mirror, 
-model fills ~85% of vertical 9:16 frame height, face ~30%; confident happy 
-smile, bright eyes looking at phone screen in mirror, genuine enthusiasm — 
-'look at my new jeans' energy. Wearing high-waisted slim-fit jeans in 
-medium-wash blue denim from @product — visible topstitching at pockets, 
-slight natural creasing at knees, fabric hugging hips and thighs with 
-flattering fit, tapered ankle, subtle fading at thighs, copper button at 
-waistband. Paired with a fitted white cropped tee and white trainers. 
-Standing with weight on right leg, left knee slightly bent, left hand resting 
-on hip, right hand holding phone. Sharp focus on model and clothing, fabric 
-texture visible. Bright bedroom with full-length mirror on wall, unmade linen 
-bed, wooden clothing rack with hangers, white trainers by the door — softly 
-blurred bokeh, lived-in personal space. Bright natural window light from 
-camera-left, 5500K daylight, true-colour rendering of denim wash, gentle 
-shadow along her right side. Visible skin pores, stray hairs at hairline, 
-natural skin texture — no filter. Visible denim weave, natural creasing at 
-knees, stitching catching light, realistic drape — not painted on. 
-Mood: confident, bright, authentic mirror selfie.
-Negative: CGI, cartoon, airbrushed skin, plastic texture, plastic fabric, 
-text, watermark, extra fingers, mannequin pose, catalogue shot, studio 
-backdrop, overly posed, fashion editorial, DSLR bokeh."
-```
-
-### Gold Standard Template (Dress)
+### Gold Standard Template (concealer example)
 
 ```
-@influencer @product
-
-"Ultra-realistic full-body mirror selfie, phone held at face height, full 
-body visible head to toe in a hallway freestanding mirror, model fills ~85% 
-of vertical 9:16 frame height, face ~28%; warm genuine smile with bright 
-eyes, slight head tilt, looking at phone screen — excited to show off new 
-dress. Wearing a midi wrap dress in sage green satin from @product — 
-V-neckline with self-tie waist, fabric draping smoothly from bust to hip 
-then flowing to mid-calf, subtle sheen catching window light, gentle gather 
-at the waist, hem skimming her calves. Paired with nude strappy heels and 
-small gold hoop earrings. Standing with slight hip shift to the left, right 
-arm relaxed at side, left hand holding phone. Sharp focus on model and 
-clothing, satin sheen visible. Bright hallway with freestanding full-length 
-mirror, coat hooks on wall, shoe rack, door frame visible — softly blurred 
-bokeh, natural home setting. Soft diffused daylight from window behind 
-camera, even illumination, fabric colour appears true to life, satin 
-highlights on the hip and waist. Visible skin pores, stray hairs, natural 
-texture — no filter. Satin weave catching light, natural fabric flow 
-following gravity, subtle fold creases at waist gather, hem weight pulling 
-fabric into natural drape. Mood: elegant but effortless, real girl showing 
-a beautiful dress.
-Negative: CGI, cartoon, airbrushed skin, plastic texture, stiff fabric, 
-text, watermark, extra fingers, mannequin pose, catalogue shot, studio 
-backdrop, fashion editorial, DSLR."
+Ultra-realistic close-up smartphone selfie, eye-level or slightly below chin,
+face ~65% of vertical 9:16 frame; slightly curious and excited expression,
+about to share a discovery. Right hand holds concealer tube from @product near
+chin height lower-right, fingers naturally curved, label visible; sharp focus
+on face and product. Off-centre framing, shallow DOF — kitchen background
+(countertop edge, mugs, small appliances) softly blurred. Soft warm window
+light from camera-left, golden-hour morning feel. Stray hairs at hairline,
+natural freckles, visible pores — no filter. Mood: warm, intimate, realistic.
 ```
 
-### Gold Standard Template (Top)
+### What Makes This Prompt Gold-Standard (compact)
+
+1. **Face %** — "~65% of vertical 9:16 frame"
+2. **Camera angle** — "eye-level or slightly below chin"
+3. **Expression + motivation** — "slightly curious and excited, about to share a discovery"
+4. **Hand anchored** — "right hand, chin height lower-right, fingers naturally curved, label visible"
+5. **Focus** — "sharp focus on face and product"
+6. **Framing + DOF** — "off-centre framing, shallow DOF"
+7. **Environment** — "kitchen background (countertop edge, mugs, small appliances) softly blurred"
+8. **Lighting** — "soft warm window light from camera-left, golden-hour morning feel"
+9. **Skin realism** — "stray hairs, freckles, visible pores — no filter"
+10. **Final mood** — "warm, intimate, realistic"
+
+---
+
+## Gold Standard Examples by Shot Role
+
+### Example 1 — Shot 1 Start Frame (Beauty Hook, 85% face)
 
 ```
-@influencer @product
+@model @product
 
-"Ultra-realistic three-quarter body mirror selfie, phone held at chest 
-height, visible from head to upper thigh in a bedroom mirror, model fills 
-~80% of vertical 9:16 frame height, face ~35%; bright enthusiastic smile, 
-eyes meeting camera through mirror, confident and happy. Wearing a fitted 
-ribbed crop top in off-white cotton from @product — fine rib texture visible, 
-crew neckline sitting flat, fabric following the curve of her torso without 
-pulling, cropped hem ending 3cm above her blue denim waistband, short 
-sleeves hugging upper arms. Paired with high-waisted blue jeans and small 
-gold pendant necklace. Standing with shoulders back, right hand holding 
-phone, left arm relaxed at side. Sharp focus on model and clothing, rib 
-texture visible. Bright bedroom with full-length wardrobe mirror, unmade 
-bed with white duvet, small bedside plant, fairy lights on headboard — 
-softly blurred bokeh, cosy personal space. Bright natural window light from 
-camera-right, 5500K, true-colour cotton rendering, soft shadow along left 
-side. Visible pores, stray hairs at hairline, natural skin — no filter. 
-Fine rib texture visible across torso, natural fabric stretch at bust, 
-slight wrinkle at side seam, cotton catching light evenly. 
-Mood: casual, bright, 'new top' excitement.
-Negative: CGI, cartoon, airbrushed skin, plastic texture, stiff fabric, 
-text, watermark, extra fingers, mannequin pose, catalogue shot, studio 
-backdrop, DSLR."
+Ultra-realistic extreme close-up smartphone selfie, eye-level with subtle upward
+tilt, face ~85% of vertical 9:16 frame; warm enthusiastic half-smile, eyebrows
+slightly raised — about to share something exciting. Left hand enters bottom-left
+with serum bottle from @product at collarbone height, fingers curled around amber
+glass body, thumb on dropper cap, label partially visible. Off-centre framing,
+shallow DOF — bathroom background (skincare bottles, cotton pads jar, gold face
+roller, frosted mirror edge) softly blurred. Soft warm window light from
+camera-left, golden-hour morning feel. Stray hairs at hairline, visible pores,
+skin translucency, natural freckles — no filter. Mood: warm, intimate, spontaneous.
+```
+
+### Example 2 — Shot 1 End / Shot 2 Start Frame (Product Reveal, 70% face)
+
+```
+@model @product
+
+Ultra-realistic close-up smartphone selfie, slightly below chin angle, face ~70%
+of vertical 9:16 frame; excited delight, eyes wide with bright genuine smile,
+lips parted mid-reaction — "wait, look at this." Left hand holds serum bottle from
+@product at face level beside left cheek, fingers firmly wrapped around amber glass,
+thumb pressing label toward camera, dropper cap pointing up. Off-centre framing
+(product left third, face right), shallow DOF — bathroom background (skincare
+bottles, cotton pads jar, gold face roller, frosted mirror edge) softly blurred.
+Same warm window light from camera-left, golden-hour feel. Stray hairs, visible
+pores, natural freckles, slight smile asymmetry — no filter. Mood: excited, warm,
+genuine — the "look what I found" reveal.
+```
+
+### Example 3 — Shot 2 End Frame (Friend Recommendation Close, 60% face)
+
+```
+@model @product
+
+Ultra-realistic medium close-up smartphone selfie, eye-level with subtle 3/4 turn
+(~20° to camera-right), face ~60% of vertical 9:16 frame; warm satisfied
+recommendation, closed-lip smile with eyes crinkled, head tilted 5° — casually
+talking to a friend. Left hand holds serum bottle from @product at chest height
+lower-left, fingers relaxed, label facing camera. Off-centre framing, shallow DOF
+— bathroom background (skincare bottles, cotton pads, gold face roller, mirror
+frame) pleasantly blurred. Same warm window light from camera-left, slightly softer.
+Stray hairs at hairline, visible pores, freckles, natural under-eye softness — no
+filter. Mood: warm, confident, friendly — the "you should try this" recommendation.
 ```
 
 ---
 
-## Step 10 — Negative Prompt Block (Always Append)
+## Step 9 — Negative Prompt Block (Always Append)
 
-Always end with a negative prompt tailored for clothing:
+Always end with a negative prompt:
 
 ```
-Negative: CGI, cartoon, airbrushed skin, plastic texture, plastic fabric, 
-stiff fabric, text, watermark, captions, extra fingers, mutated hands, 
-deformed limbs, mannequin pose, catalogue shot, studio backdrop, 
-fashion editorial, overly posed, stock photo, DSLR bokeh, commercial 
-lighting, showroom interior.
+Negative: CGI, cartoon, airbrushed skin, plastic texture, beauty filter, HDR,
+text, watermark, captions, extra fingers, mutated hands, deformed limbs, floating
+product, studio lighting, stock photo, model pose, staged, DSLR.
 ```
 
 ### Context-Specific Negatives (add as needed)
 
-- **Denim**: "ironed denim, brand-new stiff jeans, no creasing"
-- **Silk/Satin**: "matte fabric, no sheen, cardboard drape"
-- **Activewear**: "gym photoshoot, professional fitness shoot"
-- **Formal**: "red carpet, professional studio, too polished"
+- **Bathroom/home**: "showroom interior, hotel bathroom, too-clean"
+- **Outdoor**: "oversaturated, panoramic, wide-angle distortion"
+- **Kitchen**: "cooking show lighting, commercial kitchen"
 
 ---
 
-## Step 11 — Character Consistency Brief
+## Step 10 — Character Consistency Brief (for recurring characters)
 
-When using the same influencer across multiple images, reference via `@influencer`:
+When using the same model across multiple images/videos, include this at the top of every prompt OR reference via `@model`:
 
-- **`@influencer`** — ALWAYS present on the first line (same face, skin, hair, body type)
-- **`@product`** — ALWAYS present on the first line (correct garment, exact colour, texture, details)
-- **Same accessories** word-for-word across all prompts (jewellery, shoes, belt)
-- **Same hair state** (up/down, styled/natural)
+```
+CHARACTER BRIEF — [Name], [age], [ethnicity], [hair: colour + length + texture +
+specific detail], [eye colour], [skin tone with specific undertones],
+[distinguishing features: freckles across nose, beauty mark above left lip, small
+scar on chin], [typical style: oversized beige tee, delicate gold hoops, no
+foundation].
+```
+
+Example:
+
+```
+CHARACTER BRIEF — Sofia, 26, Brazilian, long dark wavy hair with natural volume,
+deep brown eyes, warm golden-brown skin with olive undertones, a few natural
+freckles across the nose bridge, tiny scar on chin, typically wears minimal makeup
+(just mascara + lip balm), simple gold jewellery — a thin necklace and small hoops.
+```
 
 ---
 
 ## Platform-Specific Adjustments
 
-### TikTok / Default (Mirror Selfie UGC)
-
+### TikTok / Default (Ultra-Realistic UGC)
 - **Always use: `vertical 9:16 frame`**
-- Add: "front-facing selfie camera, mirror reflection, candid creator energy, raw and unedited"
-- Phone visible in reflection for authenticity
+- Add: "front-facing selfie camera, ring light reflection in pupils (optional), candid Gen Z creator energy, raw and unedited"
+- Optional: "text overlay negative space at top and bottom of frame"
 
 ### Instagram Reels
-
-- Still 9:16 vertical
-- Slightly more polished: "warm tones, aesthetically messy bedroom, effortlessly styled"
-- Mirror selfie or propped-phone OOTD
+- Still 9:16 vertical (Reels native)
+- Lighting shifts warmer: "golden-hour window light, effortlessly aesthetic but not staged"
+- Tone: "warm intimate polished-casual, not as raw as TikTok"
 
 ### YouTube Shorts
-
 - 9:16 vertical
-- More editorial: "well-lit, full outfit visible, informative styling angle"
+- Lighting: "soft box or window-lit, product clearly visible, trustworthy knowledgeable expression"
+- Tone: "informative, home studio or desk feel"
 
 ---
 
 ## Quality Checklist (run before outputting every prompt)
 
-- [ ] Shot type = full-body (not close-up)
-- [ ] Face ~25-35% of frame (not 60-90%)
-- [ ] Full outfit visible head to toe
-- [ ] Expression: enthusiastic, happy, confident (NEVER neutral/flat)
-- [ ] Clothing described with: fit, colour/wash, material, construction details, how it sits on body
-- [ ] `@influencer @product` markers on first line
-- [ ] Pose adapted to clothing type
-- [ ] Footwear + accessories specified
-- [ ] "Sharp focus on model and clothing" stated
-- [ ] Environment: full-length mirror + 2-3 NAMED background objects
-- [ ] Lighting: bright, true-colour, source + direction specified
-- [ ] Skin realism: 3+ imperfections + "no filter"
-- [ ] Fabric realism: 3+ specific texture/detail mentions
-- [ ] Negative prompt appended with clothing-specific terms
+- [ ] Shot type + camera angle specified
+- [ ] Face % stated (e.g., ~85% of vertical 9:16)
+- [ ] Expression: emotion + motivation (why she feels it)
+- [ ] Hand + product: which hand, where, grip, label visibility
+- [ ] "Sharp focus on face and product" stated
+- [ ] Off-centre framing + shallow DOF noted
+- [ ] Environment: 2–4 NAMED background objects, softly blurred
+- [ ] Lighting: source + direction (camera-left/right)
+- [ ] Skin realism: 2–3 named imperfections + "no filter"
+- [ ] `@model @product` markers on first line (add `@startframe` only when user provides a start frame)
+- [ ] Final mood in one line
+- [ ] Negative prompt appended
 - [ ] 9:16 vertical stated
-- [ ] Final mood line present
+
+---
+
+## Quick Modifier Cheat Sheet
+
+| Goal | Add to prompt |
+|------|--------------|
+| **Default format** | **"vertical 9:16 frame"** — always include |
+| Candid feel | "caught mid-action", "unposed", "as if she just grabbed her phone" |
+| Real skin | "visible pores", "stray hairs at hairline", "natural freckles" |
+| Real lighting | "soft warm window light from camera-left", "golden-hour morning feel" |
+| Product anchoring | "fingers firmly grip the bottle", "label facing camera" |
+| Focus lock | "sharp focus on face and product" |
+| Framing | "off-centre framing, shallow DOF" |
+| Environment | "softly blurred, 2–4 named objects" |
+| Final mood | "Mood: warm, intimate, realistic" |
+| TikTok native | "ring light glow, ring light reflection in pupils" |

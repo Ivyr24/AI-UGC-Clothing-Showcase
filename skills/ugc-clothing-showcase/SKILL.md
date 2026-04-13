@@ -1,50 +1,46 @@
 ---
 name: ugc-motion-control
-description: "Generate UGC motion control videos for any niche (fashion, beauty/makeup, skincare, accessories, lifestyle, etc.). Input: @start_frame_ref (start frame extracted from a reference/model video whose motion will be transferred), @influencer (AI influencer image), @product (product image). Output: start frame analysis, 1 detailed start frame image prompt (matching the reference composition with the user's influencer + product), 1 concise motion control video prompt (the motion comes from the reference — prompt stays minimal), 3 engaging text overlay options with emojis (story-style EN UK, TikTok compliant), and product info with a compact title (format: '[item] here xx'). Trigger on: 'motion control', 'motion transfer', 'reference video UGC', 'start frame + reference', 'UGC video', 'clothing UGC', 'makeup UGC', 'beauty UGC', 'skincare UGC', 'product UGC', or any request involving a reference video whose motion should drive a generated video of an influencer with a product."
+description: "Generate UGC motion control videos for any niche (fashion, beauty/makeup, skincare, accessories, lifestyle, etc.). Input: @model (AI model image — face, body, identity), @product (product image — clothing, makeup, skincare, etc.), and optionally @startframe (start frame extracted from a reference/model video whose motion will be transferred, ONLY when explicitly provided). Output: start frame analysis (if @startframe provided), 1 detailed start frame image prompt (matching the reference composition with the user's model + product), 1 concise motion control video prompt (the motion comes from the reference — prompt stays minimal), 3 engaging text overlay options with emojis (story-style EN UK, TikTok compliant), and product info with a compact title (format: '[item] here xx'). Trigger on: 'motion control', 'motion transfer', 'reference video UGC', 'start frame + reference', 'UGC video', 'clothing UGC', 'makeup UGC', 'beauty UGC', 'skincare UGC', 'product UGC', or any request involving a reference video whose motion should drive a generated video of a model with a product."
 ---
 
-# UGC Motion Control Video Generator — Any Niche
+Generate a complete, production-ready prompt package for a **motion control** UGC video. The pipeline takes a reference video's start frame (the motion template), an AI model, and a product — and produces a detailed start frame image prompt plus a concise video prompt. Because motion control uses a reference video, the motion is **transferred** from the reference — the video prompt stays short and simple.
 
-Generate a complete, production-ready prompt package for a **motion control** UGC video. The pipeline takes a reference video's start frame (the motion template), an AI influencer, and a product — and produces a detailed start frame image prompt plus a concise video prompt. Because motion control uses a reference video, the motion is **transferred** from the reference — the video prompt stays short and simple.
-
-> **CRITICAL RULE**: The first thing you must do is **analyse the provided start frame from the reference video** (`@start_frame_ref`) to understand the scene, composition, body proportions, pose, camera angle, lighting and mood. The generated start frame image must match the reference composition — only the face/body identity (`@influencer`) and the product (`@product`) change.
+> **CRITICAL RULE**: If `@startframe` is provided, **analyse it first** to understand the scene, composition, body proportions, pose, camera angle, lighting and mood. The generated start frame image must match the reference composition — only the face/body identity (`@model`) and the product (`@product`) change. If `@startframe` is NOT provided, skip Stage 1 analysis and write the image prompt based on the niche best practices and product type.
 
 ---
 
 ## Format Overview
-
 ```
 MOTION CONTROL VIDEO
 ├── Reference video             (user provides — drives motion)
-├── Start Frame of reference    (@start_frame_ref — you analyse this)
+├── @startframe                 (optional — extract from reference video; you analyse this)
 │
 ├── Output 1: Start Frame Image Prompt
 │   Detailed prompt matching reference composition
-│   + user's @influencer face/body + @product
-│   Markers used: @influencer @product
+│   + user's @model face/body + @product
+│   Markers used: @model @product [@startframe — only if provided]
 │
 └── Output 2: Video Prompt (concise)
     Short motion description — reference carries the motion
     No markers
 ```
 
-- **1 start frame analysis** (scene, composition, pose, lighting, mood)
-- **1 detailed image prompt** for the new start frame (matching reference, with user's influencer + product)
+- **1 start frame analysis** (scene, composition, pose, lighting, mood) — only if `@startframe` was provided
+- **1 detailed image prompt** for the new start frame (matching reference, with user's model + product)
 - **1 concise video prompt** (motion control — short because reference drives motion)
 - **3 engaging text overlay options** (story-style, EN UK, emojis, TikTok compliant)
 - **Product info**: compact title (format: "[item] here xx") + description (max 40 chars) + 3 hashtags
 
-> **The formula**: reference motion + user's influencer identity + user's product + detailed scene recreation + engaging emoji text overlay. The output looks like a real creator genuinely reacting to or showing off the product.
+> **The formula**: reference motion + user's model identity + user's product + detailed scene recreation + engaging emoji text overlay. The output looks like a real creator genuinely reacting to or showing off the product.
 
 ---
 
 ## Required Inputs
-
 Before generating, confirm you have:
 
-1. **`@start_frame_ref`** — The first frame extracted from the reference/model video. This is the motion template's opening composition. **REQUIRED — you must analyse this.**
-2. **`@influencer`** — AI influencer image. The face, skin, hair and body type of the person who will appear in the generated video. **REQUIRED.**
-3. **`@product`** — Product photo (clothing, makeup, skincare, accessories, etc.). **REQUIRED.**
+1. **`@model`** — AI model image. The face, skin, hair and body type of the person who will appear in the generated video. **REQUIRED.**
+2. **`@product`** — Product photo (clothing, makeup, skincare, accessories, etc.). **REQUIRED.**
+3. **`@startframe`** — (OPTIONAL) First frame extracted from the reference/model video. When provided, it is the motion template's opening composition that you **must analyse**. When NOT provided, skip Stage 1 and proceed directly to Stage 2 using niche best practices.
 4. **Product name + type + niche + key selling point** — Example: "TIA Push Up Jeans — fashion — lifts and shapes", or "Glow Serum — skincare — 7-day radiance". **REQUIRED.**
 5. **Size (clothing only)** — ONLY required for clothing/apparel. Example: "Size 10", "M". Used in title. For non-clothing products (makeup, skincare, etc.) size is NOT needed — title uses friend-recommend format instead.
 
@@ -53,29 +49,33 @@ If any required input is missing, ask the user to provide it before proceeding.
 ---
 
 ## Workflow
-
 ```
-Stage 1: Start Frame Analysis (analyse @start_frame_ref)
+Stage 1: Start Frame Analysis (ONLY if @startframe was provided)
         → Scene, composition, body/pose, lighting, mood, niche
+        → SKIP this stage if @startframe was NOT provided
+
 Stage 2: Start Frame Image Prompt (detailed, with markers)
-        → Recreate reference composition with @influencer + @product
+        → Recreate reference composition (or niche best-practice if no @startframe)
+        → Markers: @model @product [@startframe — include on first line ONLY if provided]
+
 Stage 3: Video Prompt (CONCISE — motion from reference)
-        → 2-4 short lines only
+        → 2-4 short lines only — fashion-specific motion language
+        → No markers
+
 Stage 4: Text Overlay (3 engaging options with emojis)
         → Story-style, EN UK, TikTok compliant
+
 Stage 5: Product Info
         → Title "[item] here xx" + description (40 chars) + 3 hashtags
 ```
 
 ---
 
-## Stage 1 — Start Frame Analysis
-
-Analyse `@start_frame_ref` carefully. Extract every detail you can see. This is the foundation for the image prompt.
+## Stage 1 — Start Frame Analysis (only when @startframe is provided)
+Analyse `@startframe` carefully. Extract every detail you can see. This is the foundation for the image prompt.
 
 ### Analysis Checklist
-
-| Analysis Point | What to Extract from `@start_frame_ref` |
+| Analysis Point | What to Extract from `@startframe` |
 |----------------|----------------------------------------|
 | **Niche** | Fashion / beauty / skincare / makeup / accessories / lifestyle |
 | **Shot type** | Full-body / three-quarter / waist-up / face close-up / hand close-up |
@@ -93,7 +93,6 @@ Analyse `@start_frame_ref` carefully. Extract every detail you can see. This is 
 | **Aspect ratio** | 9:16 vertical (TikTok) — assumed default |
 
 ### Output Format
-
 ```
 ### Start Frame Analysis
 
@@ -116,27 +115,76 @@ Analyse `@start_frame_ref` carefully. Extract every detail you can see. This is 
 
 ## Stage 2 — Start Frame Image Prompt
 
-Generate **1 ultra-realistic image prompt** that recreates the reference composition from Stage 1 — but with the user's `@influencer` face/body and `@product` as the hero product.
+Generate **1 ultra-realistic image prompt** that recreates the reference composition from Stage 1 — but with the user's `@model` face/body and `@product` as the hero product. If `@startframe` was NOT provided, write the image prompt using fashion/niche best practices for the given product type.
 
 > **CRITICAL**: The prompt must match the reference composition closely (shot type, camera angle, pose, lighting, environment) — only the identity and product change. The reference supplies the visual blueprint.
 
 ### Mandatory First Line — Markers
-
 ```
-@influencer @product
+@model @product
+```
+OR if `@startframe` was explicitly provided:
+```
+@model @product @startframe
 ```
 
-- `@influencer` — ALWAYS present (person's face, skin, hair, body type)
+- `@model` — ALWAYS present (person's face, skin, hair, body type)
 - `@product` — ALWAYS present (exact product colour, texture, details)
+- `@startframe` — Include on first line ONLY when the user provided it in the input. If they did NOT provide a start frame, do NOT include `@startframe`.
 
-### 11-Layer Detailed Prompt Structure
+### Fashion-Specific UGC Image Prompt — Full-Body Clothing Showcase
 
+For fashion/clothing products (jeans, leggings, dresses, skirts, tops, jackets), the image prompt must follow the **ultra-realistic full-body UGC fashion formula** below. This is distinct from beauty/skincare (face-focused) shots.
+
+#### Fashion Image Prompt Key Layers
+
+```
+1. SHOT TYPE        → Ultra-realistic full-body / three-quarter body vertical smartphone [selfie / mirror shot / rear-camera shot]
+2. CAMERA ANGLE     → [straight-on / slight upward angle / waist-height / behind the model]
+3. BODY PROPORTION  → model fills ~85-95% of 9:16 vertical frame height; face ~20-30%; CLOTHING IS THE HERO
+4. EXPRESSION       → [confident / playful / seductive / casual] — genuine, not catalogue-stiff
+5. CLOTHING HERO    → [exact garment fit description: how it hugs hips, cinches waist, drapes, sits on leg; fabric texture; specific colour + finish]
+6. BODY MOVEMENT    → [weight shift / hip pop / stride / one leg forward / natural S-curve pose]
+7. ACCENTUATED BODY → [hips / waist-to-hip ratio / glutes / legs / silhouette — what the garment highlights]
+8. ENVIRONMENT      → [room type + 3-4 NAMED background objects] softly blurred bokeh — neutral tones, lived-in
+9. LIGHTING         → [source + direction camera-left/right + colour temperature + mood — bright neutral preferred for fashion]
+10. SKIN + FABRIC REALISM → visible skin texture, fabric weave/grain/sheen, natural creases at joints — no filter
+11. FINAL MOOD      → confident / intimate / UGC-authentic — NOT catalogue, NOT studio
+```
+
+#### Fashion UGC Image Prompt Gold Standard
+
+```
+@model @product
+
+"Ultra-realistic full-body vertical smartphone photo, 9:16 vertical frame.
+
+Camera positioned at waist-to-chest height, straight-on or with a subtle upward tilt — the model fills ~90% of the frame height, face occupying ~25% at the top of frame, full legs and feet visible at the bottom, creating a flattering top-to-bottom body reveal.
+
+[SUBJECT — from @model: e.g., 'confident young woman, mid-20s, long dark hair, warm olive skin tone, natural-flush complexion'] with a [expression: e.g., 'soft seductive half-smile, lips slightly parted, weight shifted to one hip, gaze aimed directly at camera with casual authority'].
+
+Wearing [EXACT from @product: e.g., 'high-waisted ribbed black leggings in a compressive matte jersey knit — fabric hugs hips and thighs, smoothly contouring the glutes with zero fabric pooling; wide elastic waistband sits 2 cm above the navel, visually cinching the waist; ankle-length with a clean hem, no logo']. Paired with [complementary items if visible: e.g., 'a fitted white cropped tee' OR 'just the leggings — crops out at shoulder']. Silhouette shows a pronounced waist-to-hip ratio, rounded glutes, and smooth quad definition — the leggings do their job visibly.
+
+[POSE from reference or niche default: e.g., '3/4 rear-and-side angle, model twisting slightly so the camera captures one cheek and the side profile of the hip-to-waist curve, one leg stepped slightly forward, hands relaxed at sides or one hand brushing hair back'].
+
+[ENVIRONMENT: e.g., 'Softly lit bedroom — neutral grey linen curtains partially drawn, light wood flooring, unmade bed with cream throw in background, white shelving unit with small plant — warm neutral backdrop, softly blurred bokeh, lived-in and personal'].
+
+[LIGHTING: e.g., 'Bright diffused natural window light from camera-right, soft daylight 5500K, even body illumination with gentle directional shadows defining body curves — no harsh shadows']. 
+
+Fabric texture clearly visible — woven grain, slight compression ridges at thigh curve, natural stretch at hip. Realistic skin: visible pores on arms and décolletage, subtle body hair on shins, light natural skin shine on shoulder — no filter, no retouching.
+
+Mood: confident, intimate, UGC-authentic — feels like a creator sharing their new favourite outfit, not a studio shoot.
+
+Negative: CGI, cartoon, airbrushed skin, plastic texture, plastic fabric, stiff fabric, text, watermark, extra fingers, mannequin pose, catalogue shot, studio backdrop, fashion editorial, overly posed, DSLR, face distortion, identity drift."
+```
+
+### 11-Layer Detailed Prompt Structure (Universal — all niches)
 Write as **one flowing paragraph** — all layers woven into a detailed natural-reading brief. **Be specific and detailed** — scene description, proportions, accentuated body parts, pose, lighting.
 
 ```
 ### Start Frame — Image Prompt
 
-@influencer @product
+@model @product [@startframe — include ONLY if provided by user]
 
 "Ultra-realistic [shot type from analysis — full-body mirror selfie /
 waist-up / three-quarter / close-up] smartphone photo, 9:16 vertical.
@@ -154,12 +202,12 @@ occupies the visual centre'].
 [SUBJECT + EXPRESSION — confident happy smile / playful surprise /
 excited reaction / seductive smile, bright eyes, genuine enthusiasm
 reading the mood of the reference. MANDATORY: genuine emotion — never
-flat or catalogue-style].
+flat or catalogue-style]
 
-[ACCENTUATED BODY DESCRIPTION — for fashion: 'high-waisted jeans hug
-hips, accentuating waist-to-hip ratio, cinched at natural waist'; for
-beauty: 'full lips catching highlight, defined cheekbones, glowing
-skin'; for skincare: 'bare clean skin, visible pores, dewy texture'.
+[ACCENTUATED BODY DESCRIPTION — for fashion: 'high-waisted leggings hug
+hips, accentuating waist-to-hip ratio, cinched at natural waist, glutes
+rounded and defined'; for beauty: 'full lips catching highlight, defined
+cheekbones, glowing skin'; for skincare: 'bare clean skin, dewy texture'.
 Match what the reference shot is selling.]
 
 Wearing/using [EXACT description from @product: garment type + fit +
@@ -169,7 +217,7 @@ bottle, application].
 
 [POSE — match reference exactly: standing with weight on one leg, hand
 on hip, other hand holding phone / leaning forward slightly / one hand
-applying product to cheek / arm across waist highlighting silhouette].
+applying product to cheek / arm across waist highlighting silhouette]
 
 [ENVIRONMENT — match reference: named room type + 3-4 specific named
 objects visible — e.g., 'bright bedroom with full-length wardrobe
@@ -198,72 +246,80 @@ DSLR, face distortion, identity drift."
 ```
 
 ### Character + Product Consistency Rules
-
-- **`@influencer`** on first line — same face, skin, hair, body type across all renders
+- **`@model`** on first line — same face, skin, hair, body type across all renders
 - **`@product`** on first line — same product with exact colour, texture, details
+- **`@startframe`** on first line — ONLY include if user explicitly provided a start frame image
 - Product must match reference placement (held / worn / applied)
 - Composition must match reference (shot type, angle, proportions)
 - Environment details should echo the reference scene
 
 ---
 
-## Stage 3 — Video Prompt (CONCISE — Motion Control)
+## Stage 3 — Video Prompt (Motion Control, Concise)
 
 Generate **1 short video prompt**. Since this is **motion control**, the motion comes from the reference video — the prompt must stay minimal and let the reference drive the movement.
 
-> **NO MARKERS**: The video prompt does NOT use `@influencer`, `@product`, or any markers. Write directly.
+> **NO MARKERS**: The video prompt does NOT use `@model`, `@product`, `@startframe`, or any markers. Write directly.
 
 ### Rules for Motion Control Video Prompts
-
 1. **Keep it SHORT** — 2-4 short lines total
 2. **Describe the scene + subject briefly** — the motion reference will supply the movement
 3. **Preserve identity and product** — explicit constraint line
 4. **No over-specified motion** — do NOT write long action descriptions, the reference handles that
 5. **Include essential texture/mood keywords** — so the render stays realistic
-6. **Negative prompt** — minimal but covers the usual artifacts
+6. **Fashion-specific language** — for clothing: fabric movement, body confidence, natural motion
+7. **Negative prompt** — minimal but covers the usual artifacts
 
-### Video Prompt Template
+### Fashion UGC Motion Control — Video Prompt Formula
 
-```
-### Video Prompt — Motion Control (concise)
-
-[Shot type matching start frame — e.g., "Full-body mirror selfie"
-OR "Waist-up close-up" OR "Face close-up"], 9:16 vertical, 24fps.
-
-Subject: [short subject description — woman in her bedroom/bathroom/
-etc., wearing/using EXACT product from start frame — one short line].
-
-[Texture + lighting line — e.g., "Ultra-realistic skin texture, true-
-colour fabric/product rendering, bright natural window light, film
-grain"].
-
-Keep identity, clothing/product, hair and accessories exactly as in
-start frame. No text on screen, stable geometry, no flicker.
-
-Negative: cartoon, 3D render, plastic skin, plastic fabric, text,
-captions, extra fingers, face distortion, identity drift.
-```
-
-### Example (Fashion — Jeans)
+For fashion/clothing products, the video prompt must capture the **essence of UGC body-confident movement** without over-specifying, since motion comes from the reference. Use sensory + cinematic language:
 
 ```
-Full-body mirror selfie, 9:16 vertical, 24fps.
+### Video Prompt — Motion Control (Fashion UGC, concise)
 
-Subject: woman in her bright bedroom, high-waisted light-wash
-push-up jeans paired with a cropped white tee and white trainers.
+[Shot type matching start frame — "Full-body vertical" / "Three-quarter body"
+/ "Rear-and-side reveal"], 9:16 vertical, 24fps.
 
-Ultra-realistic skin texture, visible denim weave, true-colour
-rendering, bright natural window light, subtle film grain.
+Subject: [short confident description — woman in her bedroom/neutral space,
+wearing EXACT product from start frame + any paired pieces]. Natural confident
+movement — weight shifts, hip sway, clothing moves with the body.
 
-Keep identity, clothing, hair and accessories exactly as in start
-frame. No text on screen, stable geometry, no flicker.
+[Texture + realism line: "Ultra-realistic skin texture, visible fabric weave
+and compression detail, true-colour rendering, bright natural window light,
+subtle film grain. Fabric drapes and stretches naturally with body movement —
+no plastic, no stiff mesh"].
 
-Negative: cartoon, 3D render, plastic skin, plastic fabric, text,
-captions, extra fingers, face distortion, identity drift.
+Keep identity, clothing, hair and accessories exactly as in start frame.
+No text on screen, stable geometry, no flicker.
+
+Negative: cartoon, 3D render, plastic skin, plastic fabric, stiff fabric,
+mannequin motion, text, captions, extra fingers, face distortion, identity drift.
 ```
 
-### Example (Beauty — Lip Gloss)
+### Fashion Video Prompt — Gold Standard (Leggings / High-Waist Bottoms)
 
+Inspired by the reference prompt style (showing off fitted high-waisted leggings from the back — turn, hip shift, leg extension, slow sensual pacing):
+
+```
+Full-body vertical reveal, 9:16 vertical, 24fps.
+
+Subject: confident young woman in a softly lit neutral bedroom, wearing
+high-waisted form-fitting leggings — fabric hugs glutes and thighs, waistband
+sits smooth at natural waist. Natural UGC-style movement: body owns the frame.
+
+Ultra-realistic skin texture, visible compressive fabric weave and glute
+silhouette definition, bright diffused natural window light (5500K), true-
+colour leggings rendering, subtle film grain. Fabric moves with the body —
+smooth stretch, no bunching, no plastic sheen.
+
+Keep identity, clothing, hair and accessories exactly as in start frame.
+No text on screen, stable geometry, no flicker.
+
+Negative: cartoon, 3D render, plastic skin, plastic fabric, stiff fabric,
+mannequin motion, text, captions, extra fingers, face distortion, identity drift.
+```
+
+### Example — Beauty (Lip Gloss)
 ```
 Face close-up, 9:16 vertical, 24fps.
 
@@ -282,12 +338,11 @@ captions, extra fingers, face distortion, identity drift.
 
 ---
 
-## Stage 4 — Text Overlay (3 Engaging Options with Emojis)
+## Stage 4 — Text Overlay Options
 
 Text is added by the user in post-production. Generate **3 engaging variations** — story-style with emojis, inspired by the reference style ("I saw a girl saying these jeans will literally lift your bum and push it into shape... she was NOT lying. 😭💗🥹").
 
 ### Style Rules
-
 - **Story-style and engaging** — short story hook, personal reaction, or bold discovery
 - **Emojis ARE used** — 1-3 emojis at end of sentence or natural places (😭 💗 🥹 😮 ✨ 💕 🤌 🔥 👀 🥹)
 - **EN UK language mandatory** — "colour" not "color", "bum" not "butt", "favourite" not "favorite"
@@ -297,7 +352,6 @@ Text is added by the user in post-production. Generate **3 engaging variations**
 - **No ALL CAPS** except for emphasis words (e.g., "NOT lying", "LITERALLY")
 
 ### TikTok Shop Content Compliance — MANDATORY
-
 **BANNED words/phrases (NEVER use):**
 - "Cheapest" / "lowest price" / superlative pricing
 - "Cure" / "treat" / "heal" / any medical claim
@@ -318,9 +372,8 @@ Text is added by the user in post-production. Generate **3 engaging variations**
 - **Soft scarcity**: "Whilst the sale's still on"
 
 ### Text Overlay Patterns (pick 3 and adapt)
-
 | Pattern | Template | Example |
-|---------|----------|---------|
+|---------|----------|---------| 
 | **Story hook + reaction** | "I saw a girl saying [benefit]... she was NOT lying. 😭💗" | "I saw a girl saying these jeans will lift your bum... she was NOT lying 😭💗🥹" |
 | **Personal obsession** | "Genuinely can't believe how [benefit] these [item] are ✨" | "Genuinely can't believe how comfy these jeans are ✨🥹" |
 | **Surprise discovery** | "Nobody told me [item] could do THIS 👀" | "Nobody told me a lip tint could last this long 👀💗" |
@@ -330,7 +383,6 @@ Text is added by the user in post-production. Generate **3 engaging variations**
 | **Friend recommend** | "Running, not walking, to get these [item] 🥹" | "Running not walking to get this gloss 🥹💕" |
 
 ### Output Format — COPY-READY
-
 ```
 ### Text Overlay Options — COPY-READY (EN UK + Emojis)
 
@@ -357,7 +409,6 @@ Text is added by the user in post-production. Generate **3 engaging variations**
 ## Stage 5 — Product Info
 
 ### Title — Format Depends on Niche
-
 The title format **depends on whether the product is clothing or not**. Pick the right path:
 
 ---
@@ -416,7 +467,6 @@ Friend-to-friend recommendation tone — as if a girl is telling her mate about 
 - `my fave highlight rn` (20 chars)
 
 ### Description (max 40 characters)
-
 One short sentence describing the key benefit or personal experience. Light emoji at end allowed.
 
 **Rules**:
@@ -433,7 +483,6 @@ One short sentence describing the key benefit or personal experience. Light emoj
 - `finally found my shade 🥹` (24 chars)
 
 ### 3 Hashtags for TikTok Ranking
-
 **Formula**: #[product type] + #[niche/quality keyword] + #[broad reach]
 
 **Rules**:
@@ -453,7 +502,6 @@ One short sentence describing the key benefit or personal experience. Light emoj
 - Perfume: `#perfume #fragrance #fyp`
 
 ### Output Format — COPY-READY
-
 ```
 ### Product Info — COPY-READY
 
@@ -474,7 +522,7 @@ One short sentence describing the key benefit or personal experience. Light emoj
 
 ---
 
-## Complete Output Package
+## Full Output Template
 
 Deliver all outputs in this order:
 
@@ -482,6 +530,7 @@ Deliver all outputs in this order:
 # UGC Motion Control — {Product Name}
 
 ## 1. Start Frame Analysis
+*(Only output this section if @startframe was provided by the user)*
 
 - Niche: [detected]
 - Shot type: [full-body / close-up / etc.]
@@ -501,11 +550,12 @@ Deliver all outputs in this order:
 
 ## 2. Start Frame — Image Prompt
 
-@influencer @product
+@model @product [@startframe — include ONLY if provided by user]
 
 "[Detailed full prompt — 11 layers, single paragraph, matching
 reference composition, proportions, accentuated body, pose,
-lighting, mood, environment. iPhone/mirror selfie allowed if
+lighting, mood, environment. For fashion: full-body, clothing hero,
+body silhouette emphasis. iPhone/mirror selfie allowed if
 reference shows it.]"
 
 ---
@@ -513,7 +563,8 @@ reference shows it.]"
 ## 3. Video Prompt — Motion Control (concise)
 
 [2-4 short lines only — shot type + subject + texture/lighting +
-constraints + negative. NO MARKERS.]
+constraints + negative. NO MARKERS. Fashion: include body-confident
+movement language + fabric realism keywords.]
 
 ---
 
@@ -567,43 +618,47 @@ constraints + negative. NO MARKERS.]
 ---
 
 ## Quality Standards
-
 | # | Criteria | Pass | Fail |
 |---|----------|------|------|
-| 1 | Start frame analysis present | All 13 analysis points filled from `@start_frame_ref` | Missing analysis or generic values |
-| 2 | Niche correctly detected | Fashion / beauty / skincare / makeup / accessories / lifestyle | Wrong niche or generic "product" |
-| 3 | Shot type matches reference | Full-body/close-up/etc. matches reference exactly | Drift from reference shot type |
-| 4 | Camera angle matches reference | Phone position, height, angle match reference | Drift from reference angle |
-| 5 | Body proportions match reference | Face %, body %, product placement match reference | Wrong proportions |
-| 6 | Accentuated body part specified | Hips/waist/lips/etc. — what the shot sells is called out | Not specified what shot highlights |
-| 7 | Pose matches reference | Detailed body position matching reference | Generic pose |
-| 8 | Expression matches reference mood | Happy/surprised/excited — matching reference energy | Flat or mismatched |
-| 9 | Environment matches reference | Same room type + 3+ named objects matching reference | Generic or wrong room |
-| 10 | Lighting matches reference | Source + direction + temperature matching reference | Generic lighting |
-| 11 | `@influencer` + `@product` markers | Both on first line of image prompt ONLY | Missing from image OR present in video prompt |
-| 12 | Image prompt detailed | 11 layers, single paragraph, detailed scenery + proportions + body + pose | Shallow or missing layers |
-| 13 | Video prompt CONCISE | 2-4 short lines only — motion not over-specified | Long motion description (that belongs to the reference) |
-| 14 | Video prompt no markers | Direct description, no @influencer or @product | Markers in video prompt |
-| 15 | Identity preservation constraint | "Keep identity, clothing/product" in video prompt | Missing constraint |
-| 16 | Negative prompt complete | Cartoon, plastic skin, text, face distortion, identity drift | Missing key negatives |
-| 17 | Text overlay story-style | Engaging hook, reaction, story feel — like img-1 reference | Dry statement without hook |
-| 18 | Text overlay emojis | 1-3 emojis naturally placed | No emojis OR emoji spam (5+) |
-| 19 | Text overlay EN UK | UK spelling + casual British register | US English or mixed |
-| 20 | Text overlay word count | 10-25 words per option | <8 words (too short) or >30 words (too long) |
-| 21 | TikTok compliance | No banned words, no fake urgency, no absolute claims | Any banned phrase |
-| 22 | Title format correct for niche | Clothing: `[item] here [size/xx]` (includes size). Non-clothing: `my best [item] …` friend-recommend tone. ≤30 chars | Wrong path for niche, missing size on clothing, or salesy/over 30 chars |
-| 23 | Title lowercase EN UK | All lowercase (except brand), EN UK spelling | Caps or US English |
-| 24 | Description character count | ≤40 chars including emoji, personal tone | Over 40 chars or product spec language |
-| 25 | Hashtag count + format | Exactly 3 lowercase EN UK hashtags: #product #niche #reach | Wrong count, caps, or irrelevant |
-| 26 | iPhone/mirror selfie allowed | Permitted in start frame if reference shows it | N/A — previous restriction removed |
-| 27 | Any niche supported | Fashion / beauty / skincare / etc. all supported | Fashion-only thinking |
-| 28 | Reference composition fidelity | Image prompt recreates reference scene composition faithfully | Creative drift from reference |
+| 1 | Start frame analysis present (when @startframe provided) | All 13 analysis points filled from `@startframe` | Missing analysis when @startframe was given |
+| 2 | Start frame analysis skipped when NOT provided | Section omitted cleanly | Generated analysis from thin air |
+| 3 | Niche correctly detected | Fashion / beauty / skincare / makeup / accessories / lifestyle | Wrong niche or generic "product" |
+| 4 | Shot type matches reference (or niche best-practice) | Full-body/close-up/etc. matches reference or niche | Drift from reference shot type |
+| 5 | Camera angle matches reference | Phone position, height, angle match reference | Drift from reference angle |
+| 6 | Body proportions match reference | Face %, body %, product placement match reference | Wrong proportions |
+| 7 | Accentuated body part specified | Hips/waist/lips/etc. — what the shot sells is called out | Not specified what shot highlights |
+| 8 | Pose matches reference | Detailed body position matching reference | Generic pose |
+| 9 | Expression matches reference mood | Happy/surprised/excited — matching reference energy | Flat or mismatched |
+| 10 | Environment matches reference | Same room type + 3+ named objects matching reference | Generic or wrong room |
+| 11 | Lighting matches reference | Source + direction + temperature matching reference | Generic lighting |
+| 12 | `@model` + `@product` markers | Both on first line of image prompt ONLY | Missing from image OR present in video prompt |
+| 13 | `@startframe` marker | On first line ONLY when user provided a start frame — omitted otherwise | Present when not provided OR missing when provided |
+| 14 | Image prompt detailed | 11 layers, single paragraph, detailed scenery + proportions + body + pose | Shallow or missing layers |
+| 15 | Fashion image prompt: clothing is hero | Garment fit, fabric texture, body silhouette explicitly described | Generic clothing description |
+| 16 | Video prompt CONCISE | 2-4 short lines only — motion not over-specified | Long motion description (that belongs to the reference) |
+| 17 | Video prompt no markers | Direct description, no @model, @product, or @startframe | Markers in video prompt |
+| 18 | Video prompt: fashion keywords | Fabric movement, body-confident motion, texture realism keywords present | Generic video prompt |
+| 19 | Identity preservation constraint | "Keep identity, clothing/product" in video prompt | Missing constraint |
+| 20 | Negative prompt complete | Cartoon, plastic skin, plastic fabric, text, face distortion, identity drift | Missing key negatives |
+| 21 | Text overlay story-style | Engaging hook, reaction, story feel | Dry statement without hook |
+| 22 | Text overlay emojis | 1-3 emojis naturally placed | No emojis OR emoji spam (5+) |
+| 23 | Text overlay EN UK | UK spelling + casual British register | US English or mixed |
+| 24 | Text overlay word count | 10-25 words per option | <8 words (too short) or >30 words (too long) |
+| 25 | TikTok compliance | No banned words, no fake urgency, no absolute claims | Any banned phrase |
+| 26 | Title format correct for niche | Clothing: `[item] here [size/xx]` (includes size). Non-clothing: `my best [item] …` friend-recommend tone. ≤30 chars | Wrong path for niche, missing size on clothing, or salesy/over 30 chars |
+| 27 | Title lowercase EN UK | All lowercase (except brand), EN UK spelling | Caps or US English |
+| 28 | Description character count | ≤40 chars including emoji, personal tone | Over 40 chars or product spec language |
+| 29 | Hashtag count + format | Exactly 3 lowercase EN UK hashtags: #product #niche #reach | Wrong count, caps, or irrelevant |
+| 30 | iPhone/mirror selfie allowed | Permitted in start frame if reference shows it | N/A |
+| 31 | Any niche supported | Fashion / beauty / skincare / etc. all supported | Fashion-only thinking |
+| 32 | Reference composition fidelity | Image prompt recreates reference scene composition faithfully | Creative drift from reference |
 
 ---
 
 ## References
-
 - `ultra-realitic-images-prompt.md` (project root) — Ultra-realistic image prompt methodology
 - Reference TikTok analysis — `img-1.png` (story-style emoji text overlay), `img-2.png` (compact title format "Jeans here xx"), `img-3.png` (engaging emoji descriptions)
+- Reference video prompt style — `Captura de tela 2026-04-12 155009.png` — UGC fashion leggings motion control reference (rear reveal, hip shift, leg extension, sensual pacing, TikTok 4K aesthetic)
 - Motion control concept — reference video supplies motion; start frame + concise prompt supply identity + product
 - TikTok Shop content compliance — Banned/allowed words for text overlays
+- **Markers**: `@model` (person identity), `@product` (product image), `@startframe` (optional reference frame — include ONLY when user provides it)
