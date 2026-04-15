@@ -32,17 +32,27 @@ Vague prompts produce generic AI slop. The difference between a winning UGC imag
 Write the prompt as **one flowing paragraph** (never a numbered list). Weave all 11 layers naturally in this order:
 
 ```
-1. SHOT TYPE        →  Ultra-realistic [close-up/macro/medium close-up] smartphone [selfie/photo]
-2. CAMERA ANGLE     →  [eye-level / slightly below chin / 1cm above eye-line / chest-up]
-3. FACE OCCUPATION  →  subject's face occupying ~[65–90]% of a vertical 9:16 frame
-4. EXPRESSION       →  [specific emotion + eye direction + mouth state + why she feels it]
+1. SHOT TYPE        →  Ultra-realistic [close-up/macro/medium close-up/full-body] smartphone [selfie/photo/rear-camera shot]
+2. CAMERA ANGLE     →  [eye-level / slightly below chin / 1cm above eye-line / chest-up / waist-height]
+3. FACE OCCUPATION  →  subject's face occupying ~[65–90]% of a vertical 9:16 frame (close-up) OR ~[20-30]% (full-body)
+4. EXPRESSION       →  [specific emotion + eye direction + mouth state]
+                        BEAUTY/SKINCARE: enthusiastic/curious — subtle smile, excited eyes,
+                        FASHION/CLOTHING: confident pouty look — lips slightly pursed, NOT big smile,
+                        direct eye contact with camera lens, self-assured "I know I look good" energy
+                        MANDATORY: model ALWAYS looks directly at camera
 5. HAND + PRODUCT   →  [which hand + where in frame + grip style + label visibility]
+                        For fashion: hands on belt loops / hips / adjusting clothing (no product held)
 6. FOCUS            →  tack-sharp on face AND product simultaneously
 7. FRAMING          →  off-centre composition + barrel distortion + shallow DOF focal plane
-8. ENVIRONMENT      →  [room type + 2–4 NAMED background objects] softly blurred bokeh
-9. LIGHTING         →  [source + direction camera-left/right + colour temperature + mood]
-10. SKIN REALISM    →  stray hairs at hairline, freckles/pores, imperfections, no filter
-11. FINAL MOOD      →  warm, intimate, realistic / spontaneous UGC vibe
+8. STYLING PROPS    →  (fashion) shoulder bag + sunglasses on head + delicate jewellery
+                        (beauty) product bottle/tube + accessories
+9. ENVIRONMENT      →  [room type + 2–4 NAMED background objects] softly blurred bokeh
+                        FASHION: fitting room / apartment hallway / minimal apartment corner
+                        BEAUTY/SKINCARE: bathroom / bedroom / kitchen
+10. LIGHTING        →  [source + direction camera-left/right + colour temperature + mood]
+11. SKIN REALISM    →  stray hairs at hairline, freckles/pores, imperfections, no filter
+12. FINAL MOOD      →  FASHION: confident, self-assured, UGC-authentic
+                        BEAUTY: warm, intimate, spontaneous UGC vibe
 ```
 
 ---
@@ -58,7 +68,9 @@ Before writing, collect (or infer):
 - **Typical style** (casual, minimal makeup, specific outfit)
 - **Product or action** (what product, how it's being held, what she's doing with it)
 - **Target platform**: TikTok / Instagram Reels / YouTube Shorts
-- **Emotional goal**: enthusiasm, curiosity, discovery, trust, excitement
+- **Emotional goal**: 
+  - Fashion: confidence, self-assurance, "I know I look good" energy
+  - Beauty/Skincare: enthusiasm, curiosity, discovery, trust, excitement
 
 ---
 
@@ -72,6 +84,7 @@ Different shots need different face-to-frame ratios. Be explicit:
 | **Tight selfie with product** | 65–75% | Face + product both visible, product held near chin/chest |
 | **Medium close-up demo** | 50–60% | Showing product in active use (applying, mixing), hands fully visible |
 | **Chest-up recommendation** | 45–55% | Close shot for product reveal with both face and product prominent |
+| **Full-body fashion** | 20–30% face | Fashion clothing showcase — face ~25%, body fills ~90% of frame height |
 
 > **Always state the exact percentage in the prompt** — don't write "close-up," write "face occupying ~85% of a vertical 9:16 frame."
 
@@ -160,7 +173,9 @@ Never write "kitchen" or "bathroom" alone. Always list 2–4 specific, named obj
 | **Supplement / Powder** | Kitchen counter | "Glass blender with pulp residue, half-peeled banana, stainless steel water bottle, ceramic bowl with almonds" |
 | **Concealer / Foundation** | Kitchen or living area | "Countertop edge, white ceramic mugs on a wooden shelf, small coffee machine, a cork coaster" |
 | **Hair product** | Bathroom mirror area | "Wooden paddle hair brush, hair clips scattered, matte ceramic diffuser, folded grey towel" |
-| **Fashion / Accessory** | Bedroom with wardrobe | "Clothes on hangers softly out of focus, open jewellery drawer, sneakers on the floor, unmade linen bedding" |
+| **Fashion — Fitting room** | Fitting room / changing room | "Textured cream mosaic tile walls, wooden door frame, warm overhead lighting, glass shelf/counter edge, wall-mounted coat hook" |
+| **Fashion — Apartment** | Apartment hallway / corner | "Cream/sage walls, dark wood laminate flooring, white doorway with window visible, wall power outlet, small bag/shoes on floor" |
+| **Fashion — Bedroom** | Bedroom with wardrobe | "Clothes on hangers softly out of focus, open jewellery drawer, sneakers on the floor, unmade linen bedding" |
 | **Gadget / Tech** | Desk / living room | "Open laptop, notebook with pen, coiled USB cable, succulent plant in a terracotta pot" |
 | **Cleaning / Home** | Kitchen counter | "Spray bottle, folded microfibre cloth, green plant leaf edge, sink faucet reflecting light" |
 
@@ -287,7 +302,8 @@ Always end with a negative prompt:
 ```
 Negative: CGI, cartoon, airbrushed skin, plastic texture, beauty filter, HDR,
 text, watermark, captions, extra fingers, mutated hands, deformed limbs, floating
-product, studio lighting, stock photo, model pose, staged, DSLR.
+product, studio lighting, stock photo, model pose, staged, DSLR, big smile,
+catalogue smile, catalogue expression.
 ```
 
 ### Context-Specific Negatives (add as needed)
@@ -295,6 +311,7 @@ product, studio lighting, stock photo, model pose, staged, DSLR.
 - **Bathroom/home**: "showroom interior, hotel bathroom, too-clean"
 - **Outdoor**: "oversaturated, panoramic, wide-angle distortion"
 - **Kitchen**: "cooking show lighting, commercial kitchen"
+- **Fashion full-body**: "mirror selfie, phone visible in hand, ring light reflection, catalogue pose, big happy smile"
 
 ---
 
@@ -325,8 +342,10 @@ freckles across the nose bridge, tiny scar on chin, typically wears minimal make
 
 ### TikTok / Default (Ultra-Realistic UGC)
 - **Always use: `vertical 9:16 frame`**
-- Add: "front-facing selfie camera, ring light reflection in pupils (optional), candid Gen Z creator energy, raw and unedited"
+- Beauty/skincare: "front-facing selfie camera, ring light reflection in pupils (optional), candid Gen Z creator energy, raw and unedited"
+- Fashion/clothing: "rear camera (someone else filming), no phone visible, no mirror — confident pouty expression, NOT big smile"
 - Optional: "text overlay negative space at top and bottom of frame"
+- **MANDATORY for fashion**: shoulder bag as styling anchor (chain strap or leather)
 
 ### Instagram Reels
 - Still 9:16 vertical (Reels native)
@@ -343,18 +362,21 @@ freckles across the nose bridge, tiny scar on chin, typically wears minimal make
 ## Quality Checklist (run before outputting every prompt)
 
 - [ ] Shot type + camera angle specified
-- [ ] Face % stated (e.g., ~85% of vertical 9:16)
-- [ ] Expression: emotion + motivation (why she feels it)
-- [ ] Hand + product: which hand, where, grip, label visibility
+- [ ] Face % stated (e.g., ~85% of vertical 9:16, or ~25% for full-body fashion)
+- [ ] Expression matches niche: fashion = confident pouty (NOT big smile), beauty = enthusiastic/curious
+- [ ] Model looks DIRECTLY at camera (non-negotiable)
+- [ ] Hand + product: which hand, where, grip, label visibility (beauty) OR hands on hips/belt loops (fashion)
 - [ ] "Sharp focus on face and product" stated
 - [ ] Off-centre framing + shallow DOF noted
-- [ ] Environment: 2–4 NAMED background objects, softly blurred
+- [ ] Environment: 2–4 NAMED background objects, softly blurred (fitting room / apartment for fashion)
 - [ ] Lighting: source + direction (camera-left/right)
 - [ ] Skin realism: 2–3 named imperfections + "no filter"
 - [ ] `@model @product` markers on first line (add `@startframe` only when user provides a start frame)
-- [ ] Final mood in one line
-- [ ] Negative prompt appended
+- [ ] Styling props for fashion: shoulder bag, sunglasses, jewellery
+- [ ] Final mood in one line (fashion: confident/self-assured | beauty: warm/intimate)
+- [ ] Negative prompt appended (including "big smile" and "catalogue smile" for fashion)
 - [ ] 9:16 vertical stated
+- [ ] Camera type correct: rear camera for fashion full-body, selfie for beauty close-up
 
 ---
 
@@ -366,9 +388,14 @@ freckles across the nose bridge, tiny scar on chin, typically wears minimal make
 | Candid feel | "caught mid-action", "unposed", "as if she just grabbed her phone" |
 | Real skin | "visible pores", "stray hairs at hairline", "natural freckles" |
 | Real lighting | "soft warm window light from camera-left", "golden-hour morning feel" |
-| Product anchoring | "fingers firmly grip the bottle", "label facing camera" |
+| Product anchoring (beauty) | "fingers firmly grip the bottle", "label facing camera" |
+| Confident fashion look | "confident pouty expression, lips slightly pursed, direct eye contact, NOT smiling big" |
+| Fashion props | "quilted chain-strap shoulder bag on shoulder", "sunglasses pushed up on head" |
 | Focus lock | "sharp focus on face and product" |
 | Framing | "off-centre framing, shallow DOF" |
-| Environment | "softly blurred, 2–4 named objects" |
-| Final mood | "Mood: warm, intimate, realistic" |
-| TikTok native | "ring light glow, ring light reflection in pupils" |
+| Environment (fashion) | "fitting room with tiled walls" or "minimalist apartment hallway, cream walls, wood floor" |
+| Environment (beauty) | "softly blurred, 2–4 named objects" |
+| Final mood (fashion) | "Mood: confident, self-assured, UGC-authentic" |
+| Final mood (beauty) | "Mood: warm, intimate, realistic" |
+| TikTok native (beauty) | "ring light glow, ring light reflection in pupils" |
+| TikTok native (fashion) | "rear camera, someone else filming, no phone visible, no mirror" |
